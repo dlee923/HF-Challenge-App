@@ -10,6 +10,7 @@ import UIKit
 
 extension UIFont {
     
-    static let fontBebas = UIFont(name: "Bebas Neue Regular", size: 5)
+    static let fontBebas = UIFont(name: "Bebas Neue", size: 5)
+    static let fontCoolvetica = UIFont(name: "Coolvetica", size: 5)
     
 }

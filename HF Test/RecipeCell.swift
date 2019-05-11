@@ -18,12 +18,14 @@ class RecipeCell: UICollectionViewCell {
     
     // MARK: - Static Properties
     let imageWidthMultiplier: CGFloat = 0.65
-    let sideMarginMultiplier: CGFloat = 0.2
+    let sideMarginMultiplier: CGFloat = 0.12
+    let ingredientsBtnSizeMultiplier: CGFloat = 0.15
     
     // MARK: - Mutable Properties
     var recipe: Recipe? {
         didSet { self.loadRecipeData() }
     }
+    var splashColor: UIColor?
     
     let title = UILabel()
     let subtitle = UILabel()
@@ -33,18 +35,29 @@ class RecipeCell: UICollectionViewCell {
     let recipeDescription = UITextView()
     let like = UIImageView()
     let difficulty = UILabel()
-    let nutrition = UIView()
+    
+    let nutritionStack = UIStackView()
+    let nutritionStackContainer = UIView()
+    let protein = UILabel()
+    let calories = UILabel()
+    let carbs = UILabel()
+    let fats = UILabel()
+    
     let ingredientsButton = UIButton()
     let backgroundSplash = UIView()
     
-    // MARK: - Methods
+    // MARK: - Setup Methods
     private func setup() {
         self.backgroundColor = .white
         self.addViews()
         self.addViewConstraints()
+        
         self.modifyBackroundColor()
         self.modifyTitle()
         self.modifyImage()
+        self.modifyDescription()
+        self.modifyIngredientsBtn()
+        self.modifyNutritionStack()
     }
     
     private func addViews() {
@@ -55,11 +68,35 @@ class RecipeCell: UICollectionViewCell {
         self.addSubview(self.recipeDescription)
         self.addSubview(self.like)
         self.addSubview(self.difficulty)
-        self.addSubview(self.nutrition)
+        self.addSubview(self.nutritionStackContainer)
+        self.nutritionStackContainer.addSubview(self.nutritionStack)
         self.addSubview(self.ingredientsButton)
         self.addSubview(self.imageShadow)
         self.addSubview(self.image)
     }
+    
+    private func loadRecipeData() {
+        self.title.text = self.recipe?.recipeInfo?.name
+        self.subtitle.text = self.recipe?.recipeInfo?.headline
+        if let imageData = self.recipe?.imageData {
+            self.image.image = UIImage(data: imageData)
+        }
+        self.recipeDescription.text = self.recipe?.recipeInfo?.descript
+        self.protein.text = self.recipe?.nutrition?.proteins
+        self.fats.text = self.recipe?.nutrition?.fats
+        self.carbs.text = self.recipe?.nutrition?.carbos
+        self.calories.text = self.recipe?.nutrition?.calories
+        self.subtitle.text = self.recipe?.recipeInfo?.headline
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+}
+
+//MARK: - View Constraint Methods
+extension RecipeCell {
     
     private func addViewConstraints() {
         let sideMargin: CGFloat = self.frame.width * self.sideMarginMultiplier
@@ -72,8 +109,8 @@ class RecipeCell: UICollectionViewCell {
         
         self.title.translatesAutoresizingMaskIntoConstraints = false
         self.title.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin).isActive = true
-        self.title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: sideMargin).isActive = true
+        self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
+        self.title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
         self.title.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         self.imageShadow.translatesAutoresizingMaskIntoConstraints = false
@@ -89,23 +126,91 @@ class RecipeCell: UICollectionViewCell {
         self.image.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
         
         self.recipeDescription.translatesAutoresizingMaskIntoConstraints = false
-        self.recipeDescription.topAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: 5).isActive = true
-        self.recipeDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5).isActive = true
-        self.recipeDescription.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.3).isActive = true
-        self.recipeDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 5).isActive = true
+        self.recipeDescription.topAnchor.constraint(equalTo: self.image.bottomAnchor, constant: 5).isActive = true
+        self.recipeDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
+        self.recipeDescription.bottomAnchor.constraint(equalTo: self.ingredientsButton.topAnchor, constant: -5).isActive = true
+        self.recipeDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
+        
+        self.ingredientsButton.translatesAutoresizingMaskIntoConstraints = false
+        self.ingredientsButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
+        self.ingredientsButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
+        self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        self.ingredientsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
+        
+        self.nutritionStackContainer.translatesAutoresizingMaskIntoConstraints = false
+        self.nutritionStackContainer.topAnchor.constraint(equalTo: self.recipeDescription.bottomAnchor, constant: 5).isActive = true
+        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        self.nutritionStackContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
+        self.nutritionStackContainer.trailingAnchor.constraint(equalTo: self.ingredientsButton.leadingAnchor, constant: -sideMargin * 0.4).isActive = true
+        
+        self.nutritionStack.translatesAutoresizingMaskIntoConstraints = false
+        self.nutritionStack.topAnchor.constraint(equalTo: self.nutritionStackContainer.topAnchor, constant: 0).isActive = true
+        self.nutritionStack.bottomAnchor.constraint(equalTo: self.nutritionStackContainer.bottomAnchor, constant: -5).isActive = true
+        self.nutritionStack.trailingAnchor.constraint(equalTo: self.nutritionStackContainer.trailingAnchor, constant: 0).isActive = true
+        self.nutritionStack.leadingAnchor.constraint(equalTo: self.nutritionStackContainer.leadingAnchor, constant: 0).isActive = true
     }
     
+}
+
+//MARK: - Modifying views of Recipe Cell Methods
+extension RecipeCell {
+    
     private func modifyBackroundColor() {
-        self.backgroundSplash.backgroundColor = .orange
+        self.backgroundSplash.backgroundColor = self.splashColor ?? UIColor.blue
     }
     
     private func modifyTitle() {
         self.title.textColor = .white
-        self.title.font = UIFont.fontBebas?.withSize(30)
+        self.title.font = UIFont.fontBebas?.withSize(40)
     }
     
     private func modifyDescription() {
-        self.backgroundColor = .gray
+        self.recipeDescription.backgroundColor = .white
+        self.recipeDescription.textAlignment = .left
+        self.recipeDescription.isEditable = false
+        
+        self.recipeDescription.font = UIFont.fontCoolvetica?.withSize(15)
+    }
+    
+    private func modifyIngredientsBtn() {
+        self.ingredientsButton.backgroundColor = .blue
+        self.ingredientsButton.layer.cornerRadius = (self.frame.width * self.ingredientsBtnSizeMultiplier) / 2
+        self.ingredientsButton.clipsToBounds = true
+    }
+    
+    private func modifyNutritionStack() {
+        self.nutritionStackContainer.backgroundColor = .white
+        
+        let proteinLbl = UILabel()
+        proteinLbl.text = "Protein"
+        let fatsLbl = UILabel()
+        fatsLbl.text = "Fats"
+        let carbsLbl = UILabel()
+        carbsLbl.text = "Carbos"
+        let caloriesLbl = UILabel()
+        caloriesLbl.text = "Cal."
+        
+        let labelStackView = UIStackView(arrangedSubviews: [proteinLbl, fatsLbl, carbsLbl, caloriesLbl])
+        labelStackView.stackProperties(axis: .horizontal, spacing: 5, alignment: .fill, distribution: .fillEqually)
+        
+        let dataStackView = UIStackView(arrangedSubviews: [self.protein, self.fats, self.carbs, self.calories])
+        dataStackView.stackProperties(axis: .horizontal, spacing: 5, alignment: .fill, distribution: .fillEqually)
+        
+        let nutritionStackSubviews = [labelStackView, dataStackView]
+        
+        for stackView in nutritionStackSubviews {
+            for view in stackView.arrangedSubviews {
+                if let label = view as? UILabel {
+                    label.font = UIFont.fontCoolvetica?.withSize(12)
+                    label.textColor = UIColor.black.withAlphaComponent(0.9)
+                }
+            }
+        }
+        
+        self.nutritionStack.addArrangedSubview(labelStackView)
+        self.nutritionStack.addArrangedSubview(dataStackView)
+        self.nutritionStack.stackProperties(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+//        self.nutritionStack.setCustomSpacing(-5, after: labelStackView)
     }
     
     private func modifyImage() {
@@ -121,21 +226,8 @@ class RecipeCell: UICollectionViewCell {
         self.imageShadow.layer.shadowPath = UIBezierPath(ovalIn: self.imageShadow.layer.bounds).cgPath
         self.imageShadow.layer.shadowColor = UIColor.black.cgColor
         self.imageShadow.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
-        self.imageShadow.layer.shadowRadius = 8
+        self.imageShadow.layer.shadowRadius = 15
         self.imageShadow.layer.shadowOpacity = 0.5
-    }
-    
-    
-    private func loadRecipeData() {
-        self.title.text = self.recipe?.recipeInfo?.name
-        self.subtitle.text = self.recipe?.recipeInfo?.headline
-        if let imageData = self.recipe?.imageData {
-            self.image.image = UIImage(data: imageData)
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
     
 }

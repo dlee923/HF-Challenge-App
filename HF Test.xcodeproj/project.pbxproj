@@ -32,6 +32,8 @@
 		704B11A322870C8900BC95E8 /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11A022870C8900BC95E8 /* ImageAPI.swift */; };
 		704B11A5228747BE00BC95E8 /* BebasNeue-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 704B11A4228747BE00BC95E8 /* BebasNeue-Regular.otf */; };
 		704B11A72287480300BC95E8 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11A62287480300BC95E8 /* Fonts.swift */; };
+		704B11A922874F4B00BC95E8 /* coolvetica rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704B11A822874F4B00BC95E8 /* coolvetica rg.ttf */; };
+		704B11AB2287584700BC95E8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11AA2287584700BC95E8 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		704B11A022870C8900BC95E8 /* ImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPI.swift; sourceTree = "<group>"; };
 		704B11A4228747BE00BC95E8 /* BebasNeue-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BebasNeue-Regular.otf"; sourceTree = "<group>"; };
 		704B11A62287480300BC95E8 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		704B11A822874F4B00BC95E8 /* coolvetica rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coolvetica rg.ttf"; sourceTree = "<group>"; };
+		704B11AA2287584700BC95E8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,8 +129,10 @@
 			isa = PBXGroup;
 			children = (
 				704B11A4228747BE00BC95E8 /* BebasNeue-Regular.otf */,
+				704B11A822874F4B00BC95E8 /* coolvetica rg.ttf */,
 				704B115A2284ED7500BC95E8 /* AppDelegate.swift */,
 				704B11A62287480300BC95E8 /* Fonts.swift */,
+				704B11AA2287584700BC95E8 /* Extensions.swift */,
 				704B115C2284ED7500BC95E8 /* MainViewController.swift */,
 				704B11982286501600BC95E8 /* RecipeCollectionView.swift */,
 				704B119C2286518400BC95E8 /* RecipeCell.swift */,
@@ -282,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				704B11A5228747BE00BC95E8 /* BebasNeue-Regular.otf in Resources */,
+				704B11A922874F4B00BC95E8 /* coolvetica rg.ttf in Resources */,
 				704B11652284ED7600BC95E8 /* LaunchScreen.storyboard in Resources */,
 				704B11622284ED7600BC95E8 /* Assets.xcassets in Resources */,
 				704B11602284ED7500BC95E8 /* Main.storyboard in Resources */,
@@ -315,6 +322,7 @@
 				704B115B2284ED7500BC95E8 /* AppDelegate.swift in Sources */,
 				704B119D2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11912284FFC100BC95E8 /* User.swift in Sources */,
+				704B11AB2287584700BC95E8 /* Extensions.swift in Sources */,
 				704B11992286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
 				704B11A122870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B11A72287480300BC95E8 /* Fonts.swift in Sources */,

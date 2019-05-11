@@ -62,11 +62,11 @@ class RecipeAPI: NSObject {
             let userObject = User(email: email, latlng: latlng, name: usersName)
             
             // Creating NUTRITION object
-            let calories = recipe["calories"] as? String ?? ""
-            let carbos = recipe["carbos"] as? String ?? ""
-            let proteins = recipe["proteins"] as? String ?? ""
-            let fibers = recipe["fibers"] as? String ?? ""
-            let fats = recipe["fats"] as? String ?? ""
+            let calories = recipe["calories"] as? String ?? "-"
+            let carbos = recipe["carbos"] as? String ?? "-"
+            let proteins = recipe["proteins"] as? String ?? "-"
+            let fibers = recipe["fibers"] as? String ?? "-"
+            let fats = recipe["fats"] as? String ?? "-"
             
             let nutrition = Recipe.Nutrition(proteins: proteins, fibers: fibers, carbos: carbos, calories: calories, fats: fats)
             
