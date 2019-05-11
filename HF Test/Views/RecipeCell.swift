@@ -21,6 +21,7 @@ class RecipeCell: UICollectionViewCell {
     let sideMarginMultiplier: CGFloat = 0.12
     let ingredientsBtnSizeMultiplier: CGFloat = 0.15
     
+    
     // MARK: - Mutable Properties
     var recipe: Recipe? {
         didSet { self.loadRecipeData() }
@@ -43,14 +44,24 @@ class RecipeCell: UICollectionViewCell {
     let carbs = UILabel()
     let fats = UILabel()
     
-    let ingredientsButton = UIButton()
+    lazy var ingredientsButton = IngredientButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     let backgroundSplash = UIView()
+    
+    // Margin padding property - influenced by sideMarginMultiplier in static properties
+    var sideMargin: CGFloat { return self.frame.width * self.sideMarginMultiplier }
     
     // MARK: - Setup Methods
     private func setup() {
         self.backgroundColor = .white
         self.addViews()
-        self.addViewConstraints()
+        
+        self.backgroundSplashConstraints()
+        self.titleConstraints()
+        self.ImageConstraints()
+        self.descriptionConstraints()
+        self.ingredientsButtonConstraints()
+        self.nutritionConstraints()
+        self.ratingConstraints()
         
         self.modifyBackroundColor()
         self.modifyTitle()
@@ -61,18 +72,18 @@ class RecipeCell: UICollectionViewCell {
     }
     
     private func addViews() {
-        self.addSubview(self.backgroundSplash)
-        self.addSubview(self.title)
+        self.addSubview(self.backgroundSplash)                          // Included
+        self.addSubview(self.title)                                     // Included
         self.addSubview(self.subtitle)
-        self.addSubview(self.rating)
-        self.addSubview(self.recipeDescription)
+        self.addSubview(self.rating)                                    // Included
+        self.addSubview(self.recipeDescription)                         // Included
         self.addSubview(self.like)
         self.addSubview(self.difficulty)
-        self.addSubview(self.nutritionStackContainer)
-        self.nutritionStackContainer.addSubview(self.nutritionStack)
-        self.addSubview(self.ingredientsButton)
-        self.addSubview(self.imageShadow)
-        self.addSubview(self.image)
+        self.addSubview(self.nutritionStackContainer)                   // Included
+        self.nutritionStackContainer.addSubview(self.nutritionStack)    // Included
+        self.addSubview(self.ingredientsButton)                         // Included
+        self.addSubview(self.imageShadow)                               // Included
+        self.addSubview(self.image)                                     // Included
     }
     
     private func loadRecipeData() {
@@ -93,26 +104,30 @@ class RecipeCell: UICollectionViewCell {
         super.init(coder: aDecoder)
     }
     
+    
 }
 
-//MARK: - View Constraint Methods
+// MARK: - View Constraint Methods
 extension RecipeCell {
     
-    private func addViewConstraints() {
-        let sideMargin: CGFloat = self.frame.width * self.sideMarginMultiplier
-        
+    fileprivate func backgroundSplashConstraints() {
         self.backgroundSplash.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundSplash.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.backgroundSplash.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.backgroundSplash.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         self.backgroundSplash.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5).isActive = true
-        
+    }
+    
+    fileprivate func titleConstraints() {
         self.title.translatesAutoresizingMaskIntoConstraints = false
         self.title.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
         self.title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
         self.title.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
+    }
+    
+    fileprivate func ImageConstraints() {
+        // Make sure imageShadoe and image constraints are identical as they are both in the same view heirarchy
         self.imageShadow.translatesAutoresizingMaskIntoConstraints = false
         self.imageShadow.bottomAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: self.frame.height * 0.05).isActive = true
         self.imageShadow.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin).isActive = true
@@ -124,35 +139,49 @@ extension RecipeCell {
         self.image.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin).isActive = true
         self.image.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
         self.image.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
-        
+    }
+    
+    fileprivate func descriptionConstraints() {
         self.recipeDescription.translatesAutoresizingMaskIntoConstraints = false
         self.recipeDescription.topAnchor.constraint(equalTo: self.image.bottomAnchor, constant: 5).isActive = true
         self.recipeDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
         self.recipeDescription.bottomAnchor.constraint(equalTo: self.ingredientsButton.topAnchor, constant: -5).isActive = true
         self.recipeDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
-        
+    }
+    
+    fileprivate func ingredientsButtonConstraints() {
         self.ingredientsButton.translatesAutoresizingMaskIntoConstraints = false
         self.ingredientsButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
         self.ingredientsButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
-        self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
         self.ingredientsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
-        
+    }
+    
+    fileprivate func nutritionConstraints() {
         self.nutritionStackContainer.translatesAutoresizingMaskIntoConstraints = false
-        self.nutritionStackContainer.topAnchor.constraint(equalTo: self.recipeDescription.bottomAnchor, constant: 5).isActive = true
-        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        self.nutritionStackContainer.topAnchor.constraint(equalTo: self.ingredientsButton.topAnchor).isActive = true
+        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor, constant: -10).isActive = true
         self.nutritionStackContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
         self.nutritionStackContainer.trailingAnchor.constraint(equalTo: self.ingredientsButton.leadingAnchor, constant: -sideMargin * 0.4).isActive = true
         
         self.nutritionStack.translatesAutoresizingMaskIntoConstraints = false
-        self.nutritionStack.topAnchor.constraint(equalTo: self.nutritionStackContainer.topAnchor, constant: 0).isActive = true
-        self.nutritionStack.bottomAnchor.constraint(equalTo: self.nutritionStackContainer.bottomAnchor, constant: -5).isActive = true
-        self.nutritionStack.trailingAnchor.constraint(equalTo: self.nutritionStackContainer.trailingAnchor, constant: 0).isActive = true
-        self.nutritionStack.leadingAnchor.constraint(equalTo: self.nutritionStackContainer.leadingAnchor, constant: 0).isActive = true
+        self.nutritionStack.topAnchor.constraint(equalTo: self.nutritionStackContainer.topAnchor).isActive = true
+        self.nutritionStack.bottomAnchor.constraint(equalTo: self.nutritionStackContainer.bottomAnchor).isActive = true
+        self.nutritionStack.trailingAnchor.constraint(equalTo: self.nutritionStackContainer.trailingAnchor).isActive = true
+        self.nutritionStack.leadingAnchor.constraint(equalTo: self.nutritionStackContainer.leadingAnchor).isActive = true
+    }
+    
+    private func ratingConstraints() {
+        self.rating.translatesAutoresizingMaskIntoConstraints = false
+        self.rating.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
+        self.rating.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 5).isActive = true
+        self.rating.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        self.rating.trailingAnchor.constraint(equalTo: self.title.trailingAnchor).isActive = true
     }
     
 }
 
-//MARK: - Modifying views of Recipe Cell Methods
+// MARK: - Modifying views of Recipe Cell Methods
 extension RecipeCell {
     
     private func modifyBackroundColor() {
@@ -173,9 +202,7 @@ extension RecipeCell {
     }
     
     private func modifyIngredientsBtn() {
-        self.ingredientsButton.backgroundColor = .blue
-        self.ingredientsButton.layer.cornerRadius = (self.frame.width * self.ingredientsBtnSizeMultiplier) / 2
-        self.ingredientsButton.clipsToBounds = true
+        // add function to animate collectionView new layout and create ingredients view
     }
     
     private func modifyNutritionStack() {
@@ -210,7 +237,6 @@ extension RecipeCell {
         self.nutritionStack.addArrangedSubview(labelStackView)
         self.nutritionStack.addArrangedSubview(dataStackView)
         self.nutritionStack.stackProperties(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
-//        self.nutritionStack.setCustomSpacing(-5, after: labelStackView)
     }
     
     private func modifyImage() {
