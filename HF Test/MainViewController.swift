@@ -26,7 +26,7 @@ class MainViewController: UIViewController {
     
     // Setup of MainViewController
     private func setup() {
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .white
         self.addViews()
         self.downloadRecipeData(completion: { self.recipes = $0 })
     }
@@ -45,15 +45,15 @@ class MainViewController: UIViewController {
         
         DispatchQueue.global().sync {
             if let recipes = tempRecipes {
-                for recipe in recipes {
-                    dispatchGroup.enter()
-                    let imageLink = recipe.recipeImageSource?.image ?? ""
-                    ImageAPI.sharedInstance.downloadImage(urlLink: imageLink, completion: {
-                        recipe.imageData = $0
-                        dispatchGroup.leave()
-                    })
-                }
-                dispatchGroup.wait()
+//                for recipe in recipes {
+//                    dispatchGroup.enter()
+//                    let imageLink = recipe.recipeImageSource?.image ?? ""
+//                    ImageAPI.sharedInstance.downloadImage(urlLink: imageLink, completion: {
+//                        recipe.imageData = $0
+//                        dispatchGroup.leave()
+//                    })
+//                }
+//                dispatchGroup.wait()
             }
         }
         
@@ -69,14 +69,17 @@ class MainViewController: UIViewController {
     
     // Layout of main recipe collection view
     private func addViews() {
-        self.recipeCollectionView = RecipeCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), collectionViewLayout: UICollectionViewFlowLayout())
+        self.recipeCollectionView = RecipeCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.frame.height), collectionViewLayout: UICollectionViewFlowLayout())
+        print(self.view.frame.height)
+        print(self.view.frame.height - self.view.safeAreaInsets.top)
+        print()
         guard let recipeCollectionView = self.recipeCollectionView else { return }
         self.view.addSubview(recipeCollectionView)
         
         recipeCollectionView.translatesAutoresizingMaskIntoConstraints = false
         recipeCollectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         recipeCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        recipeCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        recipeCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         recipeCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
     }
     

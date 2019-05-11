@@ -15,7 +15,7 @@ class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout
         self.setup()
     }
     
-    // MARK: - Properties
+    // MARK: - Mutable Properties
     var recipes: [Recipe]? {
         didSet { self.reloadData() }
     }
@@ -24,12 +24,20 @@ class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout
     private func setup() {
         self.delegate = self
         self.dataSource = self
-        self.backgroundColor = .purple
+        self.backgroundColor = .white
         self.registerCells()
+        self.collectionViewBehavior()
     }
     
     private func registerCells() {
         self.register(RecipeCell.self, forCellWithReuseIdentifier: RecipeCellId.recipe.rawValue)
+    }
+    
+    private func collectionViewBehavior() {
+        if let layout = self.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+        }
+        self.isPagingEnabled = true
     }
     
     // Cell Reuse Identifiers
@@ -64,8 +72,15 @@ extension RecipeCollectionView {
         }
     }
     
+    // Removes spacing between cells
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+        let height = collectionView.bounds.height
+        print(height)
+        return CGSize(width: collectionView.bounds.width, height: height)
     }
 }
 
