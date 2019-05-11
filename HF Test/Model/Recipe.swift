@@ -19,6 +19,7 @@ class Recipe: NSObject {
     var recipeStats: RecipeStats?
     var recipeClassification: RecipeClassification?
     var recipeImageSource: RecipeImageSource?
+    var imageData: Data?
     
     // MARK: - Initialization
     override init() {

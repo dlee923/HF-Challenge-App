@@ -21,6 +21,15 @@
 		704B118F2284F97C00BC95E8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B118D2284F97C00BC95E8 /* Recipe.swift */; };
 		704B11912284FFC100BC95E8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11902284FFC100BC95E8 /* User.swift */; };
 		704B11922284FFC100BC95E8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11902284FFC100BC95E8 /* User.swift */; };
+		704B11992286501600BC95E8 /* RecipeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11982286501600BC95E8 /* RecipeCollectionView.swift */; };
+		704B119A2286501600BC95E8 /* RecipeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11982286501600BC95E8 /* RecipeCollectionView.swift */; };
+		704B119B2286501600BC95E8 /* RecipeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11982286501600BC95E8 /* RecipeCollectionView.swift */; };
+		704B119D2286518400BC95E8 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B119C2286518400BC95E8 /* RecipeCell.swift */; };
+		704B119E2286518400BC95E8 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B119C2286518400BC95E8 /* RecipeCell.swift */; };
+		704B119F2286518400BC95E8 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B119C2286518400BC95E8 /* RecipeCell.swift */; };
+		704B11A122870C8900BC95E8 /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11A022870C8900BC95E8 /* ImageAPI.swift */; };
+		704B11A222870C8900BC95E8 /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11A022870C8900BC95E8 /* ImageAPI.swift */; };
+		704B11A322870C8900BC95E8 /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11A022870C8900BC95E8 /* ImageAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +67,9 @@
 		704B118A2284F03700BC95E8 /* RecipeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAPI.swift; sourceTree = "<group>"; };
 		704B118D2284F97C00BC95E8 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		704B11902284FFC100BC95E8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		704B11982286501600BC95E8 /* RecipeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionView.swift; sourceTree = "<group>"; };
+		704B119C2286518400BC95E8 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		704B11A022870C8900BC95E8 /* ImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +122,8 @@
 			children = (
 				704B115A2284ED7500BC95E8 /* AppDelegate.swift */,
 				704B115C2284ED7500BC95E8 /* MainViewController.swift */,
+				704B11982286501600BC95E8 /* RecipeCollectionView.swift */,
+				704B119C2286518400BC95E8 /* RecipeCell.swift */,
 				704B11972285000700BC95E8 /* API */,
 				704B11962284FFFF00BC95E8 /* Model */,
 				704B115E2284ED7500BC95E8 /* Main.storyboard */,
@@ -152,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				704B118A2284F03700BC95E8 /* RecipeAPI.swift */,
+				704B11A022870C8900BC95E8 /* ImageAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -291,7 +306,10 @@
 				704B118E2284F97C00BC95E8 /* Recipe.swift in Sources */,
 				704B115D2284ED7500BC95E8 /* MainViewController.swift in Sources */,
 				704B115B2284ED7500BC95E8 /* AppDelegate.swift in Sources */,
+				704B119D2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11912284FFC100BC95E8 /* User.swift in Sources */,
+				704B11992286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
+				704B11A122870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B118B2284F03700BC95E8 /* RecipeAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,7 +319,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				704B11922284FFC100BC95E8 /* User.swift in Sources */,
+				704B119A2286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
 				704B118C2284F03700BC95E8 /* RecipeAPI.swift in Sources */,
+				704B119E2286518400BC95E8 /* RecipeCell.swift in Sources */,
+				704B11A222870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B11702284ED7600BC95E8 /* HF_TestTests.swift in Sources */,
 				704B118F2284F97C00BC95E8 /* Recipe.swift in Sources */,
 			);
@@ -311,6 +332,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B119F2286518400BC95E8 /* RecipeCell.swift in Sources */,
+				704B119B2286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
+				704B11A322870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B117B2284ED7600BC95E8 /* HF_TestUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

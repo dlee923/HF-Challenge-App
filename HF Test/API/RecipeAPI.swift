@@ -14,9 +14,7 @@ class RecipeAPI: NSObject {
     
     /*
      Performs a GET request to retrive recipes from json file
-     
      */
-    
     func downloadRecipeData(completion: @escaping ([Recipe]) -> ()) {
         // Set a container to add recipe objects to
         var recipesContainer = [Recipe]()
