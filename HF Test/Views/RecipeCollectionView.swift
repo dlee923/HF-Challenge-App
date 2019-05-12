@@ -88,7 +88,6 @@ extension RecipeCollectionView {
 // MARK: UICollectionViewDelegate
 extension RecipeCollectionView {
     
-
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {

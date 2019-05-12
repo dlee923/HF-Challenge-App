@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IngredientButton: UIButton {
+class RecipeCellButton: UIButton {
     
     //MARK: - Initializers
     override init(frame: CGRect) {

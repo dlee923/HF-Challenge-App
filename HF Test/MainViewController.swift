@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
         self.setup()
     }
     
-    // MARK: - Properties
+    // MARK: - Mutable Properties
     var recipes: [Recipe]? {
         didSet {
             self.recipeCollectionView?.recipes = self.recipes
@@ -24,10 +24,12 @@ class MainViewController: UIViewController {
     var recipeCollectionView: RecipeCollectionView?
     let activityIndicator = UIActivityIndicatorView()
     
+    // MARK: - Setup and retrieve data methods
     // Setup of MainViewController
     private func setup() {
         self.view.backgroundColor = .white
         self.addViews()
+        self.addLoginButton()
         self.downloadRecipeData(completion: { self.recipes = $0 })
     }
     
@@ -66,13 +68,16 @@ class MainViewController: UIViewController {
             }
         }
     }
+
+}
+
+
+// MARK - Add Views and Constraints + Activity Indicator
+extension MainViewController {
     
     // Layout of main recipe collection view
     private func addViews() {
         self.recipeCollectionView = RecipeCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.frame.height), collectionViewLayout: UICollectionViewFlowLayout())
-        print(self.view.frame.height)
-        print(self.view.frame.height - self.view.safeAreaInsets.top)
-        print()
         guard let recipeCollectionView = self.recipeCollectionView else { return }
         self.view.addSubview(recipeCollectionView)
         
@@ -83,7 +88,17 @@ class MainViewController: UIViewController {
         recipeCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
     }
     
-    // Activity indicator
+    // Add Login Button
+    private func addLoginButton() {
+        let profileButton = UIButton(type: .custom)
+        profileButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        profileButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        profileButton.setImage(UIImage(named: "heart_hf.png"), for: .normal)
+        profileButton.backgroundColor = .gray
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
+    }
+    
+    // Activity indicator method
     private func activityInProgress() {
         self.activityIndicator.isHidden = false
         self.view.addSubview(self.activityIndicator)
@@ -107,6 +122,5 @@ class MainViewController: UIViewController {
         self.activityIndicator.removeFromSuperview()
         print("finished")
     }
-
+    
 }
-
