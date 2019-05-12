@@ -26,7 +26,7 @@ class LoginForm: UIView, UITextFieldDelegate {
     let submitButtonHeightMultiplier: CGFloat = 0.25
     
     // MARK: - Mutable Properties
-    var loginDelegate: LoginDelegate?
+    weak var loginDelegate: LoginDelegate?
     
     // MARK: - UI Elements
     let userLbl = UILabel()

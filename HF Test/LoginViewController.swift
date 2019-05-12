@@ -37,7 +37,7 @@ class LoginViewController: UIViewController{
     
 }
 
-protocol LoginDelegate {
+protocol LoginDelegate: LoginViewController {
     
     func captureUserInputsForSending()
     func loginUsingCredentials(username: String, password: String)
@@ -52,12 +52,22 @@ extension LoginViewController: LoginDelegate {
         let password = self.loginForm.passwordTextField.text ?? ""
         
         // Validate username is an email
-        if false {
-            let alert = UIAlertController(title: "Invalid", message: "Please enter a valid username / email address", preferredStyle: .alert)
-            let okay = UIAlertAction(title: "Okay", style: .default, handler: nil)
-            alert.addAction(okay)
-            self.present(alert, animated: true, completion: nil)
+        if password == "" || username == "" {
+            let invalidUser = UIAlertController().simpleAlertPrompt(title: "Invalid", message: "Username and / or password field is blank.", preferredStyle: .alert, actionTitle: "Okay")
+            self.present(invalidUser, animated: true, completion: nil)
+            
+        } else if !username.validateEmail() {
+            let invalidUser = UIAlertController().simpleAlertPrompt(title: "Invalid", message: "Please enter a valid username / email address.", preferredStyle: .alert, actionTitle: "Okay")
+            self.present(invalidUser, animated: true, completion: nil)
+            
+        } else if !password.validateAlphaNumericSymbol() {
+            let invalidPassword = UIAlertController().simpleAlertPrompt(title: "Invalid", message: "Password should only be alphanumeric + symbols.", preferredStyle: .alert, actionTitle: "Okay")
+            self.present(invalidPassword, animated: true, completion: nil)
+            
         } else {
+            let invalidUser = UIAlertController().simpleAlertPrompt(title: "Thank you!", message: "Attempting to log in.", preferredStyle: .alert, actionTitle: "Dismiss")
+            self.present(invalidUser, animated: true, completion: nil)
+            
             self.loginUsingCredentials(username: username, password: password)
         }
     }

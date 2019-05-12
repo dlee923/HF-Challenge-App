@@ -44,5 +44,17 @@ extension String {
         let result = self.range(of: "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", options: .regularExpression)
         return result != nil ? true : false
     }
+
+}
+
+extension UIAlertController {
     
+    func simpleAlertPrompt(title: String, message: String, preferredStyle: UIAlertController.Style, actionTitle: String?) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+        if let actionTitleInput = actionTitle {
+            let action = UIAlertAction(title: actionTitleInput, style: .default, handler: nil)
+            alert.addAction(action)
+        }
+        return alert
+    }
 }

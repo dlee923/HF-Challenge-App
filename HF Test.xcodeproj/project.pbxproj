@@ -58,6 +58,12 @@
 		704B11CD228896CA00BC95E8 /* LoginForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B92287D0CE00BC95E8 /* LoginForm.swift */; };
 		704B11CE228896D200BC95E8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B322879FA200BC95E8 /* LoginViewController.swift */; };
 		704B11CF228896D500BC95E8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B115C2284ED7500BC95E8 /* MainViewController.swift */; };
+		704B11D12288BB0F00BC95E8 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D02288BB0F00BC95E8 /* RatingView.swift */; };
+		704B11D22288BB0F00BC95E8 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D02288BB0F00BC95E8 /* RatingView.swift */; };
+		704B11D32288BB0F00BC95E8 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D02288BB0F00BC95E8 /* RatingView.swift */; };
+		704B11D52288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D42288C3B100BC95E8 /* RecipeCellInteraction.swift */; };
+		704B11D62288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D42288C3B100BC95E8 /* RecipeCellInteraction.swift */; };
+		704B11D72288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D42288C3B100BC95E8 /* RecipeCellInteraction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +113,8 @@
 		704B11B62287CD4600BC95E8 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		704B11B92287D0CE00BC95E8 /* LoginForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginForm.swift; sourceTree = "<group>"; };
 		704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsListCollectionView.swift; sourceTree = "<group>"; };
+		704B11D02288BB0F00BC95E8 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		704B11D42288C3B100BC95E8 /* RecipeCellInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellInteraction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,9 +222,11 @@
 			isa = PBXGroup;
 			children = (
 				704B11982286501600BC95E8 /* RecipeCollectionView.swift */,
-				704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */,
 				704B119C2286518400BC95E8 /* RecipeCell.swift */,
+				704B11D42288C3B100BC95E8 /* RecipeCellInteraction.swift */,
 				704B11AE22878A2F00BC95E8 /* RecipeCellButton.swift */,
+				704B11D02288BB0F00BC95E8 /* RatingView.swift */,
+				704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */,
 				704B11B92287D0CE00BC95E8 /* LoginForm.swift */,
 			);
 			path = Views;
@@ -383,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B11D52288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11B422879FA200BC95E8 /* LoginViewController.swift in Sources */,
 				704B118E2284F97C00BC95E8 /* Recipe.swift in Sources */,
 				704B115D2284ED7500BC95E8 /* MainViewController.swift in Sources */,
@@ -394,6 +405,7 @@
 				704B11AB2287584700BC95E8 /* Extensions.swift in Sources */,
 				704B11B72287CD4600BC95E8 /* Colors.swift in Sources */,
 				704B11992286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
+				704B11D12288BB0F00BC95E8 /* RatingView.swift in Sources */,
 				704B11BA2287D0CE00BC95E8 /* LoginForm.swift in Sources */,
 				704B11A122870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B11A72287480300BC95E8 /* Fonts.swift in Sources */,
@@ -405,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B11D62288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11922284FFC100BC95E8 /* User.swift in Sources */,
 				704B11C5228895F700BC95E8 /* RecipeCellButton.swift in Sources */,
 				704B11B82287CD4600BC95E8 /* Colors.swift in Sources */,
@@ -416,6 +429,7 @@
 				704B11C4228895E400BC95E8 /* MainViewController.swift in Sources */,
 				704B11BB2287D0CE00BC95E8 /* LoginForm.swift in Sources */,
 				704B11C2228895C200BC95E8 /* Extensions.swift in Sources */,
+				704B11D22288BB0F00BC95E8 /* RatingView.swift in Sources */,
 				704B11C022887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */,
 				704B11A222870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B11702284ED7600BC95E8 /* HF_TestTests.swift in Sources */,
@@ -427,6 +441,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B11D72288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11CE228896D200BC95E8 /* LoginViewController.swift in Sources */,
 				704B119F2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11C6228896B000BC95E8 /* RecipeCellButton.swift in Sources */,
@@ -438,6 +453,7 @@
 				704B11C9228896BC00BC95E8 /* Fonts.swift in Sources */,
 				704B11CF228896D500BC95E8 /* MainViewController.swift in Sources */,
 				704B11CD228896CA00BC95E8 /* LoginForm.swift in Sources */,
+				704B11D32288BB0F00BC95E8 /* RatingView.swift in Sources */,
 				704B11CC228896C700BC95E8 /* RecipeAPI.swift in Sources */,
 				704B11CA228896BF00BC95E8 /* User.swift in Sources */,
 				704B11C122887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */,

@@ -34,7 +34,7 @@ class RecipeCell: UICollectionViewCell {
     let backgroundSplash = UIView()
     let title = UILabel()
     let subtitle = UILabel()
-    let rating = UIView()
+    let rating = RatingView()
     let image = UIImageView()
     let imageShadow = UIView()
     let recipeDescription = UITextView()
@@ -98,7 +98,7 @@ class RecipeCell: UICollectionViewCell {
     }
     
     // Method to load and reload data based on changes to Recipe Obj.
-    private func loadRecipeData() {
+    internal func loadRecipeData() {
         self.title.text = self.recipe?.recipeInfo?.name
         self.subtitle.text = self.recipe?.recipeInfo?.headline
         if let imageData = self.recipe?.imageData {
@@ -113,6 +113,9 @@ class RecipeCell: UICollectionViewCell {
         if let isLiked = self.recipe?.isLiked {
             self.likeButton.tintColor = isLiked ? UIColor.color2 : self.splashColor ?? UIColor.blue
         }
+        if let userRating = self.recipe?.userRating {
+            self.rating.highlightStars(rating: userRating)
+        }
     }
     
     // reset reusable cell's default color and other non content properties
@@ -123,7 +126,7 @@ class RecipeCell: UICollectionViewCell {
         self.imageShadow.transform = CGAffineTransform.identity
         self.image.transform = CGAffineTransform.identity
         self.likeButton.transform = CGAffineTransform.identity
-        
+        self.rating.prepareForReuse()
         super.prepareForReuse()
     }
     
@@ -153,7 +156,7 @@ extension RecipeCell {
         backgroundSplashHeight?.isActive = true
     }
     
-    private func squishBackgroundSplash() {
+    internal func squishBackgroundSplash() {
         let isSquished = self.isIngredientsVisible ?? false
         if !isSquished {
             backgroundSplashHeightSquished?.isActive = false
@@ -189,7 +192,7 @@ extension RecipeCell {
         imageBottom?.isActive = true
     }
     
-    private func squishImage() {
+    internal func squishImage() {
         let scaleMultiplier: CGFloat = 0.55
         let isSquished = self.isIngredientsVisible ?? false
         if !isSquished {
@@ -236,7 +239,8 @@ extension RecipeCell {
         self.rating.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
         self.rating.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 5).isActive = true
         self.rating.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        self.rating.trailingAnchor.constraint(equalTo: self.title.trailingAnchor).isActive = true
+        // (height * number of stars) + (spacing * number of stars - 1)
+        self.rating.widthAnchor.constraint(equalToConstant: (20 * 4) + (5 * 3)).isActive = true
     }
     
     private func likeConstraints() {
@@ -247,7 +251,7 @@ extension RecipeCell {
         self.likeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
     }
     
-    private func squishLike() {
+    internal func squishLike() {
         let isSquished = self.isIngredientsVisible ?? false
         if !isSquished {
             likeButton.transform = CGAffineTransform.identity
@@ -290,7 +294,7 @@ extension RecipeCell {
     private func modifyLikeBtn() {
         // add function to call delegate method to handle pushing likes to server
         self.likeButton.backgroundColor = .white
-        self.likeButton.setImage(UIImage(named: "heart_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        self.likeButton.setImage(UIImage(named: "heart2_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
         self.likeButton.tintColor = self.splashColor ?? UIColor.blue
         self.likeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.likeButton.addTarget(self, action: #selector(self.userPressedLike), for: .touchUpInside)
@@ -349,41 +353,6 @@ extension RecipeCell {
     
     private func modifyRating() {
         self.rating.backgroundColor = .gray
-    }
-    
-}
-
-
-// MARK: - User Interaction methods
-extension RecipeCell {
-    
-    @objc private func userPressedLike() {
-        print("User Pressed like!")
-        if let isLiked = self.recipe?.isLiked {
-            self.recipe?.isLiked = isLiked ? false : true
-            self.userFeedbackDelegate?.userLiked(liked: (self.recipe?.isLiked)!)
-        } else {
-            // If nil then assume false and switch to true
-            self.recipe?.isLiked = true
-            self.userFeedbackDelegate?.userLiked(liked: (self.recipe?.isLiked)!)
-        }
-        // reload view based on recipe changes
-        loadRecipeData()
-    }
-    
-    @objc private func userPressedIngredients() {
-        if let isIngredientsVisible = self.isIngredientsVisible {
-            self.isIngredientsVisible = isIngredientsVisible ? false : true
-        } else {
-            // If nil then assume false and switch to true
-            self.isIngredientsVisible = true
-        }
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
-            self.squishBackgroundSplash()
-            self.squishImage()
-            self.squishLike()
-            self.layoutIfNeeded()
-        }, completion: nil)
     }
     
 }

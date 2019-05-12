@@ -21,6 +21,7 @@ class Recipe: NSObject {
     var recipeImageSource: RecipeImageSource?
     var imageData: Data?
     var isLiked: Bool?
+    var userRating: Int?
     
     // MARK: - Initialization
     override init() {

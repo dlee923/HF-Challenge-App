@@ -74,6 +74,7 @@ class MainViewController: UIViewController {
 
 protocol UserFeedbackDelegate: MainViewController {
     func userLiked(liked: Bool)
+    func userRated(rating: Int)
 }
 
 // MARK: - Webservice methods from user interaction (Sending likes to server)
@@ -87,6 +88,10 @@ extension MainViewController: UserFeedbackDelegate {
             // send unlike to server
             print("Unliked!")
         }
+    }
+    
+    internal func userRated(rating: Int) {
+        print("Sending rating of \(rating) to server.")
     }
 }
 
