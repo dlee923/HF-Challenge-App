@@ -82,14 +82,11 @@ class RecipeAPI: NSObject {
             
             let recipeInfo = Recipe.RecipeInfo(name: name, headline: headline, descript: descript, id: id, ingredients: ingredients, undeliverableIngredients: undeliverableIngredients, deliverableIngredients: deliverableIngredients, incompatibilities: incompatibilities)
             
-            /*
-            Creating RECIPE object
-            */
+            // Creating RECIPE object
             let recipeObject = Recipe(highlighted: highlighted, time: time, recipeInfo: recipeInfo, user: userObject, nutrition: nutrition, recipeStats: recipeStats, recipeClassification: recipeClassification, recipeImageSource: recipeImageSource)
 
             recipesContainer.append(recipeObject)
         }
-        
         completion(recipesContainer)
     }
     

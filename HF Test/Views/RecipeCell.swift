@@ -19,13 +19,13 @@ class RecipeCell: UICollectionViewCell {
     // MARK: - Static Properties
     let imageWidthMultiplier: CGFloat = 0.65
     let sideMarginMultiplier: CGFloat = 0.12
-    let ingredientsBtnSizeMultiplier: CGFloat = 0.14
+    let BtnSizeMultiplier: CGFloat = 0.13
     
     // MARK: - Mutable Properties
     var isIngredientsVisible: Bool? {
         didSet {
             if let isIngredientsVisible = self.isIngredientsVisible {
-                self.ingredientsButton.tintColor = isIngredientsVisible ? UIColor.color2 : UIColor.white
+                self.ingredientsButton.tintColor = isIngredientsVisible ? UIColor.white.withAlphaComponent(0.5) : UIColor.white
             }
         }
     }
@@ -45,8 +45,8 @@ class RecipeCell: UICollectionViewCell {
     let calories = UILabel()
     let carbs = UILabel()
     let fats = UILabel()
-    lazy var ingredientsButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
-    lazy var likeButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
+    lazy var ingredientsButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.BtnSizeMultiplier, height: self.frame.width * self.BtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
+    lazy var likeButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.BtnSizeMultiplier, height: self.frame.width * self.BtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     
     // MARK: - Delegate Properties
     weak var userFeedbackDelegate: UserFeedbackDelegate?
@@ -115,26 +115,51 @@ class RecipeCell: UICollectionViewCell {
         }
     }
     
+    // reset reusable cell's default color and other non content properties
+    override func prepareForReuse() {
+        self.likeButton.tintColor = self.splashColor ?? UIColor.blue
+        super.prepareForReuse()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
+    // MARK: - View Animatable Constraint Properties
+    var backgroundSplashHeight: NSLayoutConstraint?
+    var backgroundSplashHeightSquished: NSLayoutConstraint?
     
+    var imageShadowBottom: NSLayoutConstraint?
+    var imageBottom: NSLayoutConstraint?
 }
 
 
 // MARK: - View AutoLayout Constraint Methods
 extension RecipeCell {
     
-    fileprivate func backgroundSplashConstraints() {
+    private func backgroundSplashConstraints() {
         self.backgroundSplash.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundSplash.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.backgroundSplash.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.backgroundSplash.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        self.backgroundSplash.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5).isActive = true
+        backgroundSplashHeight = self.backgroundSplash.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5)
+        backgroundSplashHeightSquished = self.backgroundSplash.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.35)
+        backgroundSplashHeight?.isActive = true
     }
     
-    fileprivate func titleConstraints() {
+    private func squishBackgroundSplash() {
+        let isSquished = self.isIngredientsVisible ?? false
+        print("background state: \(isSquished)")
+        if !isSquished {
+            backgroundSplashHeight?.isActive = true
+            backgroundSplashHeightSquished?.isActive = false
+        } else {
+            backgroundSplashHeight?.isActive = false
+            backgroundSplashHeightSquished?.isActive = true
+        }
+    }
+    
+    private func titleConstraints() {
         self.title.translatesAutoresizingMaskIntoConstraints = false
         self.title.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
@@ -142,22 +167,37 @@ extension RecipeCell {
         self.title.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    fileprivate func ImageConstraints() {
+    private func ImageConstraints() {
         // Make sure imageShadoe and image constraints are identical as they are both in the same view heirarchy
         self.imageShadow.translatesAutoresizingMaskIntoConstraints = false
-        self.imageShadow.bottomAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: self.frame.height * 0.05).isActive = true
+        imageShadowBottom = self.imageShadow.bottomAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: self.frame.height * 0.05)
         self.imageShadow.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin).isActive = true
         self.imageShadow.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
         self.imageShadow.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
+        imageShadowBottom?.isActive = true
         
         self.image.translatesAutoresizingMaskIntoConstraints = false
-        self.image.bottomAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: self.frame.height * 0.05).isActive = true
+        imageBottom = self.image.bottomAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: self.frame.height * 0.05)
         self.image.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin).isActive = true
         self.image.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
         self.image.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
+        imageBottom?.isActive = true
     }
     
-    fileprivate func descriptionConstraints() {
+    private func squishImage() {
+        let scaleMultiplier: CGFloat = 0.55
+        let isSquished = self.isIngredientsVisible ?? false
+        print("background state: \(isSquished)")
+        if !isSquished {
+            imageShadow.transform = CGAffineTransform.identity
+            image.transform = CGAffineTransform.identity
+        } else {
+            imageShadow.transform = CGAffineTransform(translationX: -sideMargin * 1.15, y: self.frame.height * 0.0075).scaledBy(x: scaleMultiplier, y: scaleMultiplier)
+            image.transform = CGAffineTransform(translationX: -sideMargin * 1.15, y: self.frame.height * 0.0075).scaledBy(x: scaleMultiplier, y: scaleMultiplier)
+        }
+    }
+    
+    private func descriptionConstraints() {
         self.recipeDescription.translatesAutoresizingMaskIntoConstraints = false
         self.recipeDescription.topAnchor.constraint(equalTo: self.image.bottomAnchor, constant: 5).isActive = true
         self.recipeDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
@@ -165,15 +205,15 @@ extension RecipeCell {
         self.recipeDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
     }
     
-    fileprivate func ingredientsButtonConstraints() {
+    private func ingredientsButtonConstraints() {
         self.ingredientsButton.translatesAutoresizingMaskIntoConstraints = false
-        self.ingredientsButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
-        self.ingredientsButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
+        self.ingredientsButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
+        self.ingredientsButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
         self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
         self.ingredientsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
     }
     
-    fileprivate func nutritionConstraints() {
+    private func nutritionConstraints() {
         self.nutritionStackContainer.translatesAutoresizingMaskIntoConstraints = false
         self.nutritionStackContainer.topAnchor.constraint(equalTo: self.ingredientsButton.topAnchor).isActive = true
         self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor, constant: -5).isActive = true
@@ -197,8 +237,8 @@ extension RecipeCell {
     
     private func likeConstraints() {
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
-        self.likeButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
-        self.likeButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
+        self.likeButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
+        self.likeButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
         self.likeButton.centerYAnchor.constraint(equalTo: self.image.topAnchor).isActive = true
         self.likeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
     }
@@ -320,17 +360,15 @@ extension RecipeCell {
     @objc private func userPressedIngredients() {
         if let isIngredientsVisible = self.isIngredientsVisible {
             self.isIngredientsVisible = isIngredientsVisible ? false : true
-            
         } else {
             // If nil then assume false and switch to true
             self.isIngredientsVisible = true
         }
-    }
-    
-    override func prepareForReuse() {
-        // reset reusable cell's default color
-        self.likeButton.tintColor = self.splashColor ?? UIColor.blue
-        super.prepareForReuse()
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+            self.squishBackgroundSplash()
+            self.squishImage()
+            self.layoutIfNeeded()
+        }, completion: nil)
     }
     
 }

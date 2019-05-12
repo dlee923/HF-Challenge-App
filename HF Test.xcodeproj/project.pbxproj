@@ -139,19 +139,18 @@
 		704B11592284ED7500BC95E8 /* HF Test */ = {
 			isa = PBXGroup;
 			children = (
-				704B11A4228747BE00BC95E8 /* BebasNeue-Regular.otf */,
-				704B11A822874F4B00BC95E8 /* coolvetica rg.ttf */,
 				704B115A2284ED7500BC95E8 /* AppDelegate.swift */,
+				704B11BC2288611B00BC95E8 /* Fonts */,
 				704B115C2284ED7500BC95E8 /* MainViewController.swift */,
 				704B11B322879FA200BC95E8 /* LoginViewController.swift */,
 				704B11AC2287856800BC95E8 /* Views */,
 				704B11972285000700BC95E8 /* API */,
 				704B11962284FFFF00BC95E8 /* Model */,
 				704B11AD2287857300BC95E8 /* Utility */,
+				704B11BD2288613900BC95E8 /* Local_Data */,
 				704B115E2284ED7500BC95E8 /* Main.storyboard */,
 				704B11612284ED7600BC95E8 /* Assets.xcassets */,
 				704B11632284ED7600BC95E8 /* LaunchScreen.storyboard */,
-				704B11882284EFD100BC95E8 /* recipes.json */,
 				704B11662284ED7600BC95E8 /* Info.plist */,
 			);
 			path = "HF Test";
@@ -212,6 +211,23 @@
 				704B11B62287CD4600BC95E8 /* Colors.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		704B11BC2288611B00BC95E8 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				704B11A4228747BE00BC95E8 /* BebasNeue-Regular.otf */,
+				704B11A822874F4B00BC95E8 /* coolvetica rg.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		704B11BD2288613900BC95E8 /* Local_Data */ = {
+			isa = PBXGroup;
+			children = (
+				704B11882284EFD100BC95E8 /* recipes.json */,
+			);
+			path = Local_Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

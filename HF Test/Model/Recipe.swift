@@ -79,5 +79,4 @@ class Recipe: NSObject {
         var card: String?
     }
 
-    
 }
