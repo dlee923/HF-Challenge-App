@@ -19,35 +19,31 @@ class RecipeCell: UICollectionViewCell {
     // MARK: - Static Properties
     let imageWidthMultiplier: CGFloat = 0.65
     let sideMarginMultiplier: CGFloat = 0.12
-    let ingredientsBtnSizeMultiplier: CGFloat = 0.15
-    
+    let ingredientsBtnSizeMultiplier: CGFloat = 0.14
     
     // MARK: - Mutable Properties
-    var recipe: Recipe? {
-        didSet { self.loadRecipeData() }
-    }
-    var splashColor: UIColor?
-    
+    let backgroundSplash = UIView()
     let title = UILabel()
     let subtitle = UILabel()
     let rating = UIView()
     let image = UIImageView()
     let imageShadow = UIView()
     let recipeDescription = UITextView()
-    let like = UIImageView()
     let difficulty = UILabel()
-    
     let nutritionStack = UIStackView()
     let nutritionStackContainer = UIView()
     let protein = UILabel()
     let calories = UILabel()
     let carbs = UILabel()
     let fats = UILabel()
-    
-    lazy var ingredientsButton = IngredientButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
-    let backgroundSplash = UIView()
+    lazy var ingredientsButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
+    lazy var likeButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     
     // Margin padding property - influenced by sideMarginMultiplier in static properties
+    var recipe: Recipe? {
+        didSet { self.loadRecipeData() }
+    }
+    var splashColor: UIColor?
     var sideMargin: CGFloat { return self.frame.width * self.sideMarginMultiplier }
     
     // MARK: - Setup Methods
@@ -62,6 +58,7 @@ class RecipeCell: UICollectionViewCell {
         self.ingredientsButtonConstraints()
         self.nutritionConstraints()
         self.ratingConstraints()
+        self.likeConstraints()
         
         self.modifyBackroundColor()
         self.modifyTitle()
@@ -69,6 +66,8 @@ class RecipeCell: UICollectionViewCell {
         self.modifyDescription()
         self.modifyIngredientsBtn()
         self.modifyNutritionStack()
+        self.modifyLikeBtn()
+        self.modifyRating()
     }
     
     private func addViews() {
@@ -77,7 +76,7 @@ class RecipeCell: UICollectionViewCell {
         self.addSubview(self.subtitle)
         self.addSubview(self.rating)                                    // Included
         self.addSubview(self.recipeDescription)                         // Included
-        self.addSubview(self.like)
+        self.addSubview(self.likeButton)                                // Included
         self.addSubview(self.difficulty)
         self.addSubview(self.nutritionStackContainer)                   // Included
         self.nutritionStackContainer.addSubview(self.nutritionStack)    // Included
@@ -86,6 +85,7 @@ class RecipeCell: UICollectionViewCell {
         self.addSubview(self.image)                                     // Included
     }
     
+    // Method to load and reload data based on changes to Recipe Obj.
     private func loadRecipeData() {
         self.title.text = self.recipe?.recipeInfo?.name
         self.subtitle.text = self.recipe?.recipeInfo?.headline
@@ -107,7 +107,7 @@ class RecipeCell: UICollectionViewCell {
     
 }
 
-// MARK: - View Constraint Methods
+// MARK: - View AutoLayout Constraint Methods
 extension RecipeCell {
     
     fileprivate func backgroundSplashConstraints() {
@@ -160,7 +160,7 @@ extension RecipeCell {
     fileprivate func nutritionConstraints() {
         self.nutritionStackContainer.translatesAutoresizingMaskIntoConstraints = false
         self.nutritionStackContainer.topAnchor.constraint(equalTo: self.ingredientsButton.topAnchor).isActive = true
-        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor, constant: -10).isActive = true
+        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor, constant: -5).isActive = true
         self.nutritionStackContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
         self.nutritionStackContainer.trailingAnchor.constraint(equalTo: self.ingredientsButton.leadingAnchor, constant: -sideMargin * 0.4).isActive = true
         
@@ -177,6 +177,14 @@ extension RecipeCell {
         self.rating.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 5).isActive = true
         self.rating.heightAnchor.constraint(equalToConstant: 20).isActive = true
         self.rating.trailingAnchor.constraint(equalTo: self.title.trailingAnchor).isActive = true
+    }
+    
+    private func likeConstraints() {
+        self.likeButton.translatesAutoresizingMaskIntoConstraints = false
+        self.likeButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
+        self.likeButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.ingredientsBtnSizeMultiplier).isActive = true
+        self.likeButton.centerYAnchor.constraint(equalTo: self.image.topAnchor).isActive = true
+        self.likeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
     }
     
 }
@@ -203,6 +211,15 @@ extension RecipeCell {
     
     private func modifyIngredientsBtn() {
         // add function to animate collectionView new layout and create ingredients view
+        self.ingredientsButton.setImage(UIImage(named: "ingredients_hf.png"), for: .normal)
+        self.ingredientsButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    private func modifyLikeBtn() {
+        // add function to call delegate method to handle pushing likes to server
+        self.likeButton.backgroundColor = .gray
+        self.likeButton.setImage(UIImage(named: "heart_hf.png"), for: .normal)
+        self.likeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     private func modifyNutritionStack() {
@@ -254,6 +271,10 @@ extension RecipeCell {
         self.imageShadow.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
         self.imageShadow.layer.shadowRadius = 15
         self.imageShadow.layer.shadowOpacity = 0.5
+    }
+    
+    private func modifyRating() {
+        self.rating.backgroundColor = .gray
     }
     
 }
