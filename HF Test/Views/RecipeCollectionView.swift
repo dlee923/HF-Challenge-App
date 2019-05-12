@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout {
     
     // MARK: - Initializer
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -57,7 +57,7 @@ class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout
 
 
 // MARK: UICollectionViewDataSource
-extension RecipeCollectionView {
+extension RecipeCollectionView: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

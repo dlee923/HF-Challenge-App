@@ -25,6 +25,7 @@ class MainViewController: UIViewController {
     // MARK: - UI Elements
     var recipeCollectionView: RecipeCollectionView?
     let activityIndicator = UIActivityIndicatorView()
+    var introBlankView: UIView?
     
     // MARK: - Setup and retrieve data methods
     // Setup of MainViewController
@@ -46,7 +47,7 @@ class MainViewController: UIViewController {
         DispatchQueue.global().sync {
             RecipeAPI.sharedInstance.downloadRecipeData(completion: { tempRecipes = $0 })
         }
-        DispatchQueue.global().sync {
+        DispatchQueue.global().async {
             if let recipes = tempRecipes {
 //                for recipe in recipes {
 //                    dispatchGroup.enter()
@@ -124,27 +125,38 @@ extension MainViewController {
     
     // Activity indicator method
     private func activityInProgress() {
+        // Add background view to prevent user interactions
+        introBlankView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        introBlankView?.backgroundColor = UIColor.color1
+        
+        UIApplication.shared.keyWindow?.addSubview(introBlankView ?? UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)))
+        
         self.activityIndicator.isHidden = false
-        self.view.addSubview(self.activityIndicator)
+        UIApplication.shared.keyWindow?.addSubview(self.activityIndicator)
         self.activityIndicator.backgroundColor = .black
         self.activityIndicator.layer.cornerRadius = 10
         self.activityIndicator.clipsToBounds = true
         
         self.activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        self.activityIndicator.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.25).isActive = true
-        self.activityIndicator.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.25).isActive = true
+        self.activityIndicator.centerXAnchor.constraint(equalTo: UIApplication.shared.keyWindow!.centerXAnchor).isActive = true
+        self.activityIndicator.centerYAnchor.constraint(equalTo: UIApplication.shared.keyWindow!.centerYAnchor).isActive = true
+        self.activityIndicator.widthAnchor.constraint(equalTo: UIApplication.shared.keyWindow!.widthAnchor, multiplier: 0.25).isActive = true
+        self.activityIndicator.heightAnchor.constraint(equalTo: UIApplication.shared.keyWindow!.widthAnchor, multiplier: 0.25).isActive = true
         
         self.activityIndicator.startAnimating()
         print("start")
     }
     
     private func activityEnded() {
-        self.activityIndicator.stopAnimating()
-        self.activityIndicator.isHidden = true
-        self.activityIndicator.removeFromSuperview()
-        print("finished")
+        UIView.animate(withDuration: 0.35, animations: {
+            self.introBlankView?.alpha = 0.0
+        }) { (_) in
+            self.introBlankView?.removeFromSuperview()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.removeFromSuperview()
+            print("finished")
+        }
     }
     
 }

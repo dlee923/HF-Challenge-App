@@ -8,83 +8,63 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController{
 
     // MARK: - Initializer
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.setup()
     }
     
-    // MARK: - Mutable Properties
-    let userLbl = UILabel()
-    let userTextField = UITextField()
-    let passwordLbl = UILabel()
-    let passwordTextField = UITextField()
-    let userInfoStackView = UIStackView()
-    let submitButton = UIButton()
+    // MARK: - UI Elements
+    lazy var loginForm = LoginForm(frame: CGRect(x: 0, y: 0, width: self.view.frame.width * 0.7, height: self.view.frame.height * 0.4))
     
     // MARK: - Setup methods and adding views
     private func setup() {
         self.view.backgroundColor = .white
-        self.userTextField.delegate = self
-        self.passwordTextField.delegate = self
-        
-        self.addUserInputBox()
-        self.userInputBoxConstraints()
-        self.modifySubmitButton()
-        self.modifyTextFields()
+        self.addLoginForm()
     }
     
-    private func addUserInputBox() {
-        self.view.addSubview(userInfoStackView)
-        self.userInfoStackView.addArrangedSubview(self.userLbl)
-        self.userInfoStackView.addArrangedSubview(self.userTextField)
-        self.userInfoStackView.addArrangedSubview(self.passwordLbl)
-        self.userInfoStackView.addArrangedSubview(self.passwordTextField)
-        self.view.addSubview(self.submitButton)
-        
-        self.userInfoStackView.stackProperties(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fillEqually)
+    private func addLoginForm() {
+        self.loginForm.loginDelegate = self
+        self.view.addSubview(self.loginForm)
+        self.loginForm.translatesAutoresizingMaskIntoConstraints = false
+        self.loginForm.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.loginForm.bottomAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        self.loginForm.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.7).isActive = true
+        self.loginForm.heightAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.4).isActive = true
     }
     
-    private func userInputBoxConstraints() {
-        self.userInfoStackView.translatesAutoresizingMaskIntoConstraints = false
-        self.userInfoStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        self.userInfoStackView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        self.userInfoStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.7).isActive = true
-        self.userInfoStackView.heightAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.4).isActive = true
-        
-        self.submitButton.translatesAutoresizingMaskIntoConstraints = false
-        self.submitButton.topAnchor.constraint(equalTo: self.userInfoStackView.bottomAnchor, constant: 10).isActive = true
-        self.submitButton.leadingAnchor.constraint(equalTo: self.userInfoStackView.leadingAnchor).isActive = true
-        self.submitButton.trailingAnchor.constraint(equalTo: self.userInfoStackView.trailingAnchor).isActive = true
-        self.submitButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
-    }
-    
-    private func modifyTextFields() {
-        self.userLbl.font = UIFont.fontCoolvetica?.withSize(15)
-        self.userLbl.text = "Username"
-        self.userTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        self.userTextField.borderStyle = .bezel
-        
-        self.passwordLbl.font = UIFont.fontCoolvetica?.withSize(15)
-        self.passwordLbl.text = "Password"
-        self.passwordTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        self.passwordTextField.borderStyle = .bezel
-    }
-    
-    private func modifySubmitButton() {
-        self.submitButton.layer.cornerRadius = 10
-        self.submitButton.backgroundColor = UIColor.color1
-        self.submitButton.setTitleColor(.black, for: .normal)
-        self.submitButton.layer.borderWidth = 2
-        self.submitButton.setTitle("Submit", for: .normal)
-        self.submitButton.addShadow(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.view.frame.width * 0.7, height: 55)),
-                                    color: .black,
-                                    offset: CGSize(width: 3.0, height: 3.0),
-                                    radius: 5,
-                                    opacity: 0.5)
-    }
-
 }
+
+protocol LoginDelegate {
+    
+    func captureUserInputsForSending()
+    func loginUsingCredentials(username: String, password: String)
+    
+}
+
+extension LoginViewController: LoginDelegate {
+    
+    internal func captureUserInputsForSending() {
+        let username = self.loginForm.userTextField.text ?? ""
+        let password = self.loginForm.passwordTextField.text ?? ""
+        
+        // Validate username is an email
+        if false {
+            let alert = UIAlertController(title: "Invalid", message: "Please enter a valid username / email address", preferredStyle: .alert)
+            let okay = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(okay)
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            self.loginUsingCredentials(username: username, password: password)
+        }
+    }
+    
+    internal func loginUsingCredentials(username: String, password: String) {
+        // Function to send login request to server should be placed here.
+        print("Attemping to log in as \(username) with password: \(password)")
+    }
+    
+}
+

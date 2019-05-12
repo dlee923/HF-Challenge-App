@@ -118,6 +118,12 @@ class RecipeCell: UICollectionViewCell {
     // reset reusable cell's default color and other non content properties
     override func prepareForReuse() {
         self.likeButton.tintColor = self.splashColor ?? UIColor.blue
+        self.backgroundSplashHeightSquished?.isActive = false
+        self.backgroundSplashHeight?.isActive = true
+        self.imageShadow.transform = CGAffineTransform.identity
+        self.image.transform = CGAffineTransform.identity
+        self.likeButton.transform = CGAffineTransform.identity
+        
         super.prepareForReuse()
     }
     
@@ -149,10 +155,9 @@ extension RecipeCell {
     
     private func squishBackgroundSplash() {
         let isSquished = self.isIngredientsVisible ?? false
-        print("background state: \(isSquished)")
         if !isSquished {
-            backgroundSplashHeight?.isActive = true
             backgroundSplashHeightSquished?.isActive = false
+            backgroundSplashHeight?.isActive = true
         } else {
             backgroundSplashHeight?.isActive = false
             backgroundSplashHeightSquished?.isActive = true
@@ -187,7 +192,6 @@ extension RecipeCell {
     private func squishImage() {
         let scaleMultiplier: CGFloat = 0.55
         let isSquished = self.isIngredientsVisible ?? false
-        print("background state: \(isSquished)")
         if !isSquished {
             imageShadow.transform = CGAffineTransform.identity
             image.transform = CGAffineTransform.identity
@@ -241,6 +245,15 @@ extension RecipeCell {
         self.likeButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
         self.likeButton.centerYAnchor.constraint(equalTo: self.image.topAnchor).isActive = true
         self.likeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
+    }
+    
+    private func squishLike() {
+        let isSquished = self.isIngredientsVisible ?? false
+        if !isSquished {
+            likeButton.transform = CGAffineTransform.identity
+        } else {
+            likeButton.transform = CGAffineTransform(translationX: 0, y: self.frame.height * 0.12)
+        }
     }
     
 }
@@ -345,6 +358,7 @@ extension RecipeCell {
 extension RecipeCell {
     
     @objc private func userPressedLike() {
+        print("User Pressed like!")
         if let isLiked = self.recipe?.isLiked {
             self.recipe?.isLiked = isLiked ? false : true
             self.userFeedbackDelegate?.userLiked(liked: (self.recipe?.isLiked)!)
@@ -367,6 +381,7 @@ extension RecipeCell {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
             self.squishBackgroundSplash()
             self.squishImage()
+            self.squishLike()
             self.layoutIfNeeded()
         }, completion: nil)
     }

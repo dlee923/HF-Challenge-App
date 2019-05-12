@@ -39,8 +39,11 @@
 		704B11B522879FA200BC95E8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B322879FA200BC95E8 /* LoginViewController.swift */; };
 		704B11B72287CD4600BC95E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B62287CD4600BC95E8 /* Colors.swift */; };
 		704B11B82287CD4600BC95E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B62287CD4600BC95E8 /* Colors.swift */; };
-		704B11BA2287D0CE00BC95E8 /* LoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B92287D0CE00BC95E8 /* LoginInputView.swift */; };
-		704B11BB2287D0CE00BC95E8 /* LoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B92287D0CE00BC95E8 /* LoginInputView.swift */; };
+		704B11BA2287D0CE00BC95E8 /* LoginForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B92287D0CE00BC95E8 /* LoginForm.swift */; };
+		704B11BB2287D0CE00BC95E8 /* LoginForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B92287D0CE00BC95E8 /* LoginForm.swift */; };
+		704B11BF22887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */; };
+		704B11C022887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */; };
+		704B11C122887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,7 +91,8 @@
 		704B11AE22878A2F00BC95E8 /* RecipeCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellButton.swift; sourceTree = "<group>"; };
 		704B11B322879FA200BC95E8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		704B11B62287CD4600BC95E8 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		704B11B92287D0CE00BC95E8 /* LoginInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputView.swift; sourceTree = "<group>"; };
+		704B11B92287D0CE00BC95E8 /* LoginForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginForm.swift; sourceTree = "<group>"; };
+		704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsListCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,9 +200,10 @@
 			isa = PBXGroup;
 			children = (
 				704B11982286501600BC95E8 /* RecipeCollectionView.swift */,
+				704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */,
 				704B119C2286518400BC95E8 /* RecipeCell.swift */,
 				704B11AE22878A2F00BC95E8 /* RecipeCellButton.swift */,
-				704B11B92287D0CE00BC95E8 /* LoginInputView.swift */,
+				704B11B92287D0CE00BC95E8 /* LoginForm.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -368,13 +373,14 @@
 				704B118E2284F97C00BC95E8 /* Recipe.swift in Sources */,
 				704B115D2284ED7500BC95E8 /* MainViewController.swift in Sources */,
 				704B115B2284ED7500BC95E8 /* AppDelegate.swift in Sources */,
+				704B11BF22887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */,
 				704B119D2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11AF22878A2F00BC95E8 /* RecipeCellButton.swift in Sources */,
 				704B11912284FFC100BC95E8 /* User.swift in Sources */,
 				704B11AB2287584700BC95E8 /* Extensions.swift in Sources */,
 				704B11B72287CD4600BC95E8 /* Colors.swift in Sources */,
 				704B11992286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
-				704B11BA2287D0CE00BC95E8 /* LoginInputView.swift in Sources */,
+				704B11BA2287D0CE00BC95E8 /* LoginForm.swift in Sources */,
 				704B11A122870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B11A72287480300BC95E8 /* Fonts.swift in Sources */,
 				704B118B2284F03700BC95E8 /* RecipeAPI.swift in Sources */,
@@ -391,7 +397,8 @@
 				704B118C2284F03700BC95E8 /* RecipeAPI.swift in Sources */,
 				704B119E2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11B522879FA200BC95E8 /* LoginViewController.swift in Sources */,
-				704B11BB2287D0CE00BC95E8 /* LoginInputView.swift in Sources */,
+				704B11BB2287D0CE00BC95E8 /* LoginForm.swift in Sources */,
+				704B11C022887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */,
 				704B11A222870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B11702284ED7600BC95E8 /* HF_TestTests.swift in Sources */,
 				704B118F2284F97C00BC95E8 /* Recipe.swift in Sources */,
@@ -406,6 +413,7 @@
 				704B119B2286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
 				704B11A322870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B117B2284ED7600BC95E8 /* HF_TestUITests.swift in Sources */,
+				704B11C122887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
