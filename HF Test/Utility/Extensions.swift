@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIStackView {
-    
+    // Simplify adding stackview parameters
     func stackProperties(axis: NSLayoutConstraint.Axis, spacing: CGFloat, alignment: UIStackView.Alignment, distribution: UIStackView.Distribution) {
         
         self.axis = axis
@@ -21,13 +21,28 @@ extension UIStackView {
 }
 
 extension UIView {
-    
+    // Simplify adding shadow parameters
     func addShadow(path: UIBezierPath, color: UIColor, offset: CGSize, radius: CGFloat, opacity: Float) {
         self.layer.shadowPath = path.cgPath
         self.layer.shadowColor = color.cgColor
         self.layer.shadowOffset = offset
         self.layer.shadowRadius = radius
         self.layer.shadowOpacity = opacity
+    }
+    
+}
+
+extension String {
+    // Text validation to block invalid submissions
+    func validateAlphaNumericSymbol() -> Bool {
+        let result = self.range(of: "[^a-zA-Z0-9!@#$%\\^&*()]", options: .regularExpression)
+        return result != nil ? false : true
+    }
+    
+    func validateEmail() -> Bool {
+//        let result = self.range(of: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}", options: .regularExpression)
+        let result = self.range(of: "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", options: .regularExpression)
+        return result != nil ? true : false
     }
     
 }

@@ -44,6 +44,20 @@
 		704B11BF22887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */; };
 		704B11C022887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */; };
 		704B11C122887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11BE22887CAB00BC95E8 /* IngredientsListCollectionView.swift */; };
+		704B11C2228895C200BC95E8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11AA2287584700BC95E8 /* Extensions.swift */; };
+		704B11C3228895C700BC95E8 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11A62287480300BC95E8 /* Fonts.swift */; };
+		704B11C4228895E400BC95E8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B115C2284ED7500BC95E8 /* MainViewController.swift */; };
+		704B11C5228895F700BC95E8 /* RecipeCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11AE22878A2F00BC95E8 /* RecipeCellButton.swift */; };
+		704B11C6228896B000BC95E8 /* RecipeCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11AE22878A2F00BC95E8 /* RecipeCellButton.swift */; };
+		704B11C7228896B600BC95E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B62287CD4600BC95E8 /* Colors.swift */; };
+		704B11C8228896B900BC95E8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11AA2287584700BC95E8 /* Extensions.swift */; };
+		704B11C9228896BC00BC95E8 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11A62287480300BC95E8 /* Fonts.swift */; };
+		704B11CA228896BF00BC95E8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11902284FFC100BC95E8 /* User.swift */; };
+		704B11CB228896C200BC95E8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B118D2284F97C00BC95E8 /* Recipe.swift */; };
+		704B11CC228896C700BC95E8 /* RecipeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B118A2284F03700BC95E8 /* RecipeAPI.swift */; };
+		704B11CD228896CA00BC95E8 /* LoginForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B92287D0CE00BC95E8 /* LoginForm.swift */; };
+		704B11CE228896D200BC95E8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11B322879FA200BC95E8 /* LoginViewController.swift */; };
+		704B11CF228896D500BC95E8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B115C2284ED7500BC95E8 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,12 +406,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				704B11922284FFC100BC95E8 /* User.swift in Sources */,
+				704B11C5228895F700BC95E8 /* RecipeCellButton.swift in Sources */,
 				704B11B82287CD4600BC95E8 /* Colors.swift in Sources */,
+				704B11C3228895C700BC95E8 /* Fonts.swift in Sources */,
 				704B119A2286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
 				704B118C2284F03700BC95E8 /* RecipeAPI.swift in Sources */,
 				704B119E2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11B522879FA200BC95E8 /* LoginViewController.swift in Sources */,
+				704B11C4228895E400BC95E8 /* MainViewController.swift in Sources */,
 				704B11BB2287D0CE00BC95E8 /* LoginForm.swift in Sources */,
+				704B11C2228895C200BC95E8 /* Extensions.swift in Sources */,
 				704B11C022887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */,
 				704B11A222870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B11702284ED7600BC95E8 /* HF_TestTests.swift in Sources */,
@@ -409,11 +427,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B11CE228896D200BC95E8 /* LoginViewController.swift in Sources */,
 				704B119F2286518400BC95E8 /* RecipeCell.swift in Sources */,
+				704B11C6228896B000BC95E8 /* RecipeCellButton.swift in Sources */,
 				704B119B2286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
+				704B11C8228896B900BC95E8 /* Extensions.swift in Sources */,
+				704B11C7228896B600BC95E8 /* Colors.swift in Sources */,
 				704B11A322870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B117B2284ED7600BC95E8 /* HF_TestUITests.swift in Sources */,
+				704B11C9228896BC00BC95E8 /* Fonts.swift in Sources */,
+				704B11CF228896D500BC95E8 /* MainViewController.swift in Sources */,
+				704B11CD228896CA00BC95E8 /* LoginForm.swift in Sources */,
+				704B11CC228896C700BC95E8 /* RecipeAPI.swift in Sources */,
+				704B11CA228896BF00BC95E8 /* User.swift in Sources */,
 				704B11C122887CAB00BC95E8 /* IngredientsListCollectionView.swift in Sources */,
+				704B11CB228896C200BC95E8 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

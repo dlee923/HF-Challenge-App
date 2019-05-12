@@ -8,11 +8,14 @@
 
 import UIKit
 
-class LoginForm: UIView {
+class LoginForm: UIView, UITextFieldDelegate {
     
     // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.passwordTextField.delegate = self
+        self.userTextField.delegate = self
+        
         self.addUserInputBox()
         self.userInputBoxConstraints()
         self.modifyTextFields()
@@ -35,7 +38,7 @@ class LoginForm: UIView {
     let submitButton = UIButton()
     
     // MARK: - Setup methods and adding views
-    private func addUserInputBox() {
+    internal func addUserInputBox() {
         self.addSubview(userInfoStackView)
         self.userInfoStackView.addArrangedSubview(self.userLbl)
         self.userInfoStackView.addArrangedSubview(self.userTextField)
@@ -49,10 +52,10 @@ class LoginForm: UIView {
     
     private func userInputBoxConstraints() {
         self.userInfoStackView.translatesAutoresizingMaskIntoConstraints = false
-        self.userInfoStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        self.userInfoStackView.bottomAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        self.userInfoStackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        self.userInfoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.userInfoStackView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        self.userInfoStackView.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: (1 - submitButtonHeightMultiplier)).isActive = true
+        self.userInfoStackView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: (1 - submitButtonHeightMultiplier)).isActive = true
         
         self.submitButton.translatesAutoresizingMaskIntoConstraints = false
         self.submitButton.topAnchor.constraint(equalTo: self.userInfoStackView.bottomAnchor, constant: 10).isActive = true
@@ -64,16 +67,19 @@ class LoginForm: UIView {
         print(self.submitButton.frame)
     }
     
-    private func modifyTextFields() {
+    internal func modifyTextFields() {
         self.userLbl.font = UIFont.fontCoolvetica?.withSize(15)
         self.userLbl.text = "Username"
         self.userTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         self.userTextField.borderStyle = .bezel
+        self.userTextField.placeholder = "Email address"
         
         self.passwordLbl.font = UIFont.fontCoolvetica?.withSize(15)
         self.passwordLbl.text = "Password"
         self.passwordTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         self.passwordTextField.borderStyle = .bezel
+        self.passwordTextField.placeholder = "Password"
+        self.passwordTextField.isSecureTextEntry = true
     }
     
     private func modifySubmitButton() {
@@ -82,14 +88,15 @@ class LoginForm: UIView {
         self.submitButton.setTitleColor(.black, for: .normal)
         self.submitButton.layer.borderWidth = 2
         self.submitButton.setTitle("Submit", for: .normal)
-        self.submitButton.addShadow(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.width * submitButtonHeightMultiplier)),
+        self.submitButton.addShadow(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.submitButton.frame.width, height: self.submitButton.frame.height)),
                                     color: .black,
-                                    offset: CGSize(width: 3.0, height: 3.0),
-                                    radius: 5,
+                                    offset: CGSize(width: 1.5, height: 1.5),
+                                    radius: 8,
                                     opacity: 0.5)
         self.submitButton.addTarget(self, action: #selector(submitButtonMethod), for: .touchUpInside)
     }
     
+    // MARK: - Submit button method
     @objc private func submitButtonMethod() {
         self.loginDelegate?.captureUserInputsForSending()
     }

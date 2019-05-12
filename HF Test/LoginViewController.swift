@@ -17,9 +17,9 @@ class LoginViewController: UIViewController{
     }
     
     // MARK: - UI Elements
-    lazy var loginForm = LoginForm(frame: CGRect(x: 0, y: 0, width: self.view.frame.width * 0.7, height: self.view.frame.height * 0.4))
+    lazy var loginForm = LoginForm(frame: CGRect(x: 0, y: 0, width: self.view.frame.width * 0.7, height: self.view.frame.height * 0.3))
     
-    // MARK: - Setup methods and adding views
+    // MARK: - Setup view methods
     private func setup() {
         self.view.backgroundColor = .white
         self.addLoginForm()
@@ -32,7 +32,7 @@ class LoginViewController: UIViewController{
         self.loginForm.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.loginForm.bottomAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         self.loginForm.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.7).isActive = true
-        self.loginForm.heightAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.4).isActive = true
+        self.loginForm.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.3).isActive = true
     }
     
 }
@@ -44,6 +44,7 @@ protocol LoginDelegate {
     
 }
 
+// MARK: Login methods for submitting data
 extension LoginViewController: LoginDelegate {
     
     internal func captureUserInputsForSending() {
