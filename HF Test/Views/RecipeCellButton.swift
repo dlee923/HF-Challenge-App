@@ -32,12 +32,14 @@ class RecipeCellButton: UIButton {
         UIView.animate(withDuration: 0.25, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             self.transform = CGAffineTransform(scaleX: 1.18, y: 1.18)
         }, completion: nil)
+        super.touchesBegan(touches, with: event)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         UIView.animate(withDuration: 0.25, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseIn, animations: {
             self.transform = CGAffineTransform.identity
         }, completion: nil)
+        super.touchesEnded(touches, with: event)
     }
     
     required init?(coder aDecoder: NSCoder) {

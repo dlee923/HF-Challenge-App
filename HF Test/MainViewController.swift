@@ -21,6 +21,8 @@ class MainViewController: UIViewController {
             self.recipeCollectionView?.recipes = self.recipes
         }
     }
+    
+    // MARK: - UI Elements
     var recipeCollectionView: RecipeCollectionView?
     let activityIndicator = UIActivityIndicatorView()
     
@@ -38,13 +40,12 @@ class MainViewController: UIViewController {
         self.activityInProgress()
         
         var tempRecipes: [Recipe]?
-        
+        // Create DispatchGroup to manage synchronous execution of webservice calls
         let dispatchGroup = DispatchGroup()
         
         DispatchQueue.global().sync {
             RecipeAPI.sharedInstance.downloadRecipeData(completion: { tempRecipes = $0 })
         }
-        
         DispatchQueue.global().sync {
             if let recipes = tempRecipes {
 //                for recipe in recipes {
@@ -58,7 +59,6 @@ class MainViewController: UIViewController {
 //                dispatchGroup.wait()
             }
         }
-        
         dispatchGroup.notify(queue: .global()) {
             DispatchQueue.main.async {
                 self.activityEnded()
@@ -71,6 +71,24 @@ class MainViewController: UIViewController {
 
 }
 
+protocol UserFeedbackDelegate: MainViewController {
+    func userLiked(liked: Bool)
+}
+
+// MARK: - Webservice methods from user interaction (Sending likes to server)
+extension MainViewController: UserFeedbackDelegate {
+    
+    internal func userLiked(liked: Bool) {
+        if liked {
+            // send like to server
+            print("Liked!")
+        } else {
+            // send unlike to server
+            print("Unliked!")
+        }
+    }
+}
+
 
 // MARK - Add Views and Constraints + Activity Indicator
 extension MainViewController {
@@ -79,6 +97,7 @@ extension MainViewController {
     private func addViews() {
         self.recipeCollectionView = RecipeCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.frame.height), collectionViewLayout: UICollectionViewFlowLayout())
         guard let recipeCollectionView = self.recipeCollectionView else { return }
+        recipeCollectionView.userFeedbackDelegate = self
         self.view.addSubview(recipeCollectionView)
         
         recipeCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,9 +112,14 @@ extension MainViewController {
         let profileButton = UIButton(type: .custom)
         profileButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         profileButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        profileButton.setImage(UIImage(named: "heart_hf.png"), for: .normal)
-        profileButton.backgroundColor = .gray
+        profileButton.setImage(UIImage(named: "user_hf.png"), for: .normal)
+        profileButton.addTarget(self, action: #selector(self.presentLoginViewController), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
+    }
+    
+    @objc private func presentLoginViewController() {
+        let loginViewController = LoginViewController()
+        self.navigationController?.pushViewController(loginViewController, animated: true)
     }
     
     // Activity indicator method

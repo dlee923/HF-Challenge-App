@@ -19,3 +19,15 @@ extension UIStackView {
     }
     
 }
+
+extension UIView {
+    
+    func addShadow(path: UIBezierPath, color: UIColor, offset: CGSize, radius: CGFloat, opacity: Float) {
+        self.layer.shadowPath = path.cgPath
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOffset = offset
+        self.layer.shadowRadius = radius
+        self.layer.shadowOpacity = opacity
+    }
+    
+}

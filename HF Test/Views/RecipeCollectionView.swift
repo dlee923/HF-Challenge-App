@@ -10,6 +10,7 @@ import UIKit
 
 class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
+    // MARK: - Initializer
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         self.setup()
@@ -19,6 +20,9 @@ class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout
     var recipes: [Recipe]? {
         didSet { self.reloadData() }
     }
+    
+    // MARK: - Delegate Properties
+    weak var userFeedbackDelegate: UserFeedbackDelegate?
     
     // MARK: - Setup
     private func setup() {
@@ -66,6 +70,7 @@ extension RecipeCollectionView {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecipeCellId.recipe.rawValue, for: indexPath) as? RecipeCell {
             cell.recipe = self.recipes?[indexPath.item]
+            cell.userFeedbackDelegate = self.userFeedbackDelegate
             return cell
         } else {
             return UICollectionViewCell()
@@ -79,7 +84,6 @@ extension RecipeCollectionView {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.bounds.height
-        print(height)
         return CGSize(width: collectionView.bounds.width, height: height)
     }
 }

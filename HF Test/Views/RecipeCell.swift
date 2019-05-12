@@ -22,6 +22,15 @@ class RecipeCell: UICollectionViewCell {
     let ingredientsBtnSizeMultiplier: CGFloat = 0.14
     
     // MARK: - Mutable Properties
+    var isLiked: Bool? {
+        didSet {
+            if let isLiked = self.isLiked {
+                self.likeButton.tintColor = isLiked ? UIColor.red : self.splashColor ?? UIColor.blue
+            }
+        }
+    }
+    
+    // MARK: - UI Elements
     let backgroundSplash = UIView()
     let title = UILabel()
     let subtitle = UILabel()
@@ -38,6 +47,9 @@ class RecipeCell: UICollectionViewCell {
     let fats = UILabel()
     lazy var ingredientsButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     lazy var likeButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.ingredientsBtnSizeMultiplier, height: self.frame.width * self.ingredientsBtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
+    
+    // MARK: - Delegate Properties
+    weak var userFeedbackDelegate: UserFeedbackDelegate?
     
     // Margin padding property - influenced by sideMarginMultiplier in static properties
     var recipe: Recipe? {
@@ -106,6 +118,7 @@ class RecipeCell: UICollectionViewCell {
     
     
 }
+
 
 // MARK: - View AutoLayout Constraint Methods
 extension RecipeCell {
@@ -189,6 +202,7 @@ extension RecipeCell {
     
 }
 
+
 // MARK: - Modifying views of Recipe Cell Methods
 extension RecipeCell {
     
@@ -211,15 +225,18 @@ extension RecipeCell {
     
     private func modifyIngredientsBtn() {
         // add function to animate collectionView new layout and create ingredients view
-        self.ingredientsButton.setImage(UIImage(named: "ingredients_hf.png"), for: .normal)
+        self.ingredientsButton.setImage(UIImage(named: "ingredients_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        self.ingredientsButton.tintColor = .white
         self.ingredientsButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     private func modifyLikeBtn() {
         // add function to call delegate method to handle pushing likes to server
-        self.likeButton.backgroundColor = .gray
-        self.likeButton.setImage(UIImage(named: "heart_hf.png"), for: .normal)
+        self.likeButton.backgroundColor = .white
+        self.likeButton.setImage(UIImage(named: "heart_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        self.likeButton.tintColor = self.splashColor ?? UIColor.blue
         self.likeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.likeButton.addTarget(self, action: #selector(self.userPressedLike), for: .touchUpInside)
     }
     
     private func modifyNutritionStack() {
@@ -266,15 +283,32 @@ extension RecipeCell {
         self.image.clipsToBounds = true
         
         self.imageShadow.frame = CGRect(x: 0, y: 0, width: (self.frame.width * self.imageWidthMultiplier), height: (self.frame.width * self.imageWidthMultiplier))
-        self.imageShadow.layer.shadowPath = UIBezierPath(ovalIn: self.imageShadow.layer.bounds).cgPath
-        self.imageShadow.layer.shadowColor = UIColor.black.cgColor
-        self.imageShadow.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
-        self.imageShadow.layer.shadowRadius = 15
-        self.imageShadow.layer.shadowOpacity = 0.5
+        self.imageShadow.addShadow(path: UIBezierPath(ovalIn: self.imageShadow.layer.bounds),
+                                   color: .black,
+                                   offset: CGSize(width: 3.0, height: 3.0),
+                                   radius: 15,
+                                   opacity: 0.5)
     }
     
     private func modifyRating() {
         self.rating.backgroundColor = .gray
+    }
+    
+}
+
+
+// MARK: - User Interaction methods
+extension RecipeCell {
+    
+    @objc private func userPressedLike() {
+        if let _ = self.isLiked {
+            self.isLiked = self.isLiked == false ? true : false
+            self.userFeedbackDelegate?.userLiked(liked: self.isLiked!)
+        } else {
+            // If nil then assume false and switch to true
+            self.isLiked = true
+            self.userFeedbackDelegate?.userLiked(liked: self.isLiked!)
+        }
     }
     
 }
