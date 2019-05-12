@@ -22,10 +22,10 @@ class RecipeCell: UICollectionViewCell {
     let ingredientsBtnSizeMultiplier: CGFloat = 0.14
     
     // MARK: - Mutable Properties
-    var isLiked: Bool? {
+    var isIngredientsVisible: Bool? {
         didSet {
-            if let isLiked = self.isLiked {
-                self.likeButton.tintColor = isLiked ? UIColor.red : self.splashColor ?? UIColor.blue
+            if let isIngredientsVisible = self.isIngredientsVisible {
+                self.ingredientsButton.tintColor = isIngredientsVisible ? UIColor.color2 : UIColor.white
             }
         }
     }
@@ -110,6 +110,9 @@ class RecipeCell: UICollectionViewCell {
         self.carbs.text = self.recipe?.nutrition?.carbos
         self.calories.text = self.recipe?.nutrition?.calories
         self.subtitle.text = self.recipe?.recipeInfo?.headline
+        if let isLiked = self.recipe?.isLiked {
+            self.likeButton.tintColor = isLiked ? UIColor.color2 : self.splashColor ?? UIColor.blue
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -228,6 +231,7 @@ extension RecipeCell {
         self.ingredientsButton.setImage(UIImage(named: "ingredients_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
         self.ingredientsButton.tintColor = .white
         self.ingredientsButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.ingredientsButton.addTarget(self, action: #selector(self.userPressedIngredients), for: .touchUpInside)
     }
     
     private func modifyLikeBtn() {
@@ -301,14 +305,32 @@ extension RecipeCell {
 extension RecipeCell {
     
     @objc private func userPressedLike() {
-        if let _ = self.isLiked {
-            self.isLiked = self.isLiked == false ? true : false
-            self.userFeedbackDelegate?.userLiked(liked: self.isLiked!)
+        if let isLiked = self.recipe?.isLiked {
+            self.recipe?.isLiked = isLiked ? false : true
+            self.userFeedbackDelegate?.userLiked(liked: (self.recipe?.isLiked)!)
         } else {
             // If nil then assume false and switch to true
-            self.isLiked = true
-            self.userFeedbackDelegate?.userLiked(liked: self.isLiked!)
+            self.recipe?.isLiked = true
+            self.userFeedbackDelegate?.userLiked(liked: (self.recipe?.isLiked)!)
         }
+        // reload view based on recipe changes
+        loadRecipeData()
+    }
+    
+    @objc private func userPressedIngredients() {
+        if let isIngredientsVisible = self.isIngredientsVisible {
+            self.isIngredientsVisible = isIngredientsVisible ? false : true
+            
+        } else {
+            // If nil then assume false and switch to true
+            self.isIngredientsVisible = true
+        }
+    }
+    
+    override func prepareForReuse() {
+        // reset reusable cell's default color
+        self.likeButton.tintColor = self.splashColor ?? UIColor.blue
+        super.prepareForReuse()
     }
     
 }
