@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -22,7 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainViewController = MainViewController()
         
-        window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+        let navigationController = UINavigationController(rootViewController: mainViewController)
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.tintColor = .black
+        
+        window?.rootViewController = navigationController
         
         return true
     }

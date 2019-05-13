@@ -19,6 +19,7 @@ class RatingView: UIStackView {
     
     // MARK: - Mutable Properties
     var rating: Int?
+    weak var recipeUserInteractionDelegate: RecipeUserInteractionDelegate?
     
     // MARK: - UI elements
     let star1 = UIButton(type: .custom)
@@ -53,6 +54,8 @@ class RatingView: UIStackView {
         
         // Highlight stars
         self.highlightStars(rating: index)
+        
+        self.recipeUserInteractionDelegate?.userPressedRating()
     }
     
     func highlightStars(rating: Int) {

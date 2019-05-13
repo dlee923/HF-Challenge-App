@@ -72,7 +72,7 @@ class RecipeCell: UICollectionViewCell {
         self.ratingConstraints()
         self.likeConstraints()
         
-        self.modifyBackroundColor()
+        self.modifyColors()
         self.modifyTitle()
         self.modifyImage()
         self.modifyDescription()
@@ -114,6 +114,8 @@ class RecipeCell: UICollectionViewCell {
             self.likeButton.tintColor = isLiked ? UIColor.color2 : self.splashColor ?? UIColor.blue
         }
         if let userRating = self.recipe?.userRating {
+            print(recipe?.recipeInfo?.name)
+            print(userRating)
             self.rating.highlightStars(rating: userRating)
         }
     }
@@ -143,132 +145,20 @@ class RecipeCell: UICollectionViewCell {
 }
 
 
-// MARK: - View AutoLayout Constraint Methods
+// MARK: - Modifying COLORS of Recipe Cell
 extension RecipeCell {
-    
-    private func backgroundSplashConstraints() {
-        self.backgroundSplash.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundSplash.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.backgroundSplash.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.backgroundSplash.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        backgroundSplashHeight = self.backgroundSplash.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5)
-        backgroundSplashHeightSquished = self.backgroundSplash.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.35)
-        backgroundSplashHeight?.isActive = true
-    }
-    
-    internal func squishBackgroundSplash() {
-        let isSquished = self.isIngredientsVisible ?? false
-        if !isSquished {
-            backgroundSplashHeightSquished?.isActive = false
-            backgroundSplashHeight?.isActive = true
-        } else {
-            backgroundSplashHeight?.isActive = false
-            backgroundSplashHeightSquished?.isActive = true
-        }
-    }
-    
-    private func titleConstraints() {
-        self.title.translatesAutoresizingMaskIntoConstraints = false
-        self.title.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
-        self.title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
-        self.title.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    }
-    
-    private func ImageConstraints() {
-        // Make sure imageShadoe and image constraints are identical as they are both in the same view heirarchy
-        self.imageShadow.translatesAutoresizingMaskIntoConstraints = false
-        imageShadowBottom = self.imageShadow.bottomAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: self.frame.height * 0.05)
-        self.imageShadow.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin).isActive = true
-        self.imageShadow.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
-        self.imageShadow.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
-        imageShadowBottom?.isActive = true
-        
-        self.image.translatesAutoresizingMaskIntoConstraints = false
-        imageBottom = self.image.bottomAnchor.constraint(equalTo: self.backgroundSplash.bottomAnchor, constant: self.frame.height * 0.05)
-        self.image.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin).isActive = true
-        self.image.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
-        self.image.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.imageWidthMultiplier).isActive = true
-        imageBottom?.isActive = true
-    }
-    
-    internal func squishImage() {
-        let scaleMultiplier: CGFloat = 0.55
-        let isSquished = self.isIngredientsVisible ?? false
-        if !isSquished {
-            imageShadow.transform = CGAffineTransform.identity
-            image.transform = CGAffineTransform.identity
-        } else {
-            imageShadow.transform = CGAffineTransform(translationX: -sideMargin * 1.15, y: self.frame.height * 0.0075).scaledBy(x: scaleMultiplier, y: scaleMultiplier)
-            image.transform = CGAffineTransform(translationX: -sideMargin * 1.15, y: self.frame.height * 0.0075).scaledBy(x: scaleMultiplier, y: scaleMultiplier)
-        }
-    }
-    
-    private func descriptionConstraints() {
-        self.recipeDescription.translatesAutoresizingMaskIntoConstraints = false
-        self.recipeDescription.topAnchor.constraint(equalTo: self.image.bottomAnchor, constant: 5).isActive = true
-        self.recipeDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
-        self.recipeDescription.bottomAnchor.constraint(equalTo: self.ingredientsButton.topAnchor, constant: -5).isActive = true
-        self.recipeDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
-    }
-    
-    private func ingredientsButtonConstraints() {
-        self.ingredientsButton.translatesAutoresizingMaskIntoConstraints = false
-        self.ingredientsButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
-        self.ingredientsButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
-        self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
-        self.ingredientsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
-    }
-    
-    private func nutritionConstraints() {
-        self.nutritionStackContainer.translatesAutoresizingMaskIntoConstraints = false
-        self.nutritionStackContainer.topAnchor.constraint(equalTo: self.ingredientsButton.topAnchor).isActive = true
-        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor, constant: -5).isActive = true
-        self.nutritionStackContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
-        self.nutritionStackContainer.trailingAnchor.constraint(equalTo: self.ingredientsButton.leadingAnchor, constant: -sideMargin * 0.4).isActive = true
-        
-        self.nutritionStack.translatesAutoresizingMaskIntoConstraints = false
-        self.nutritionStack.topAnchor.constraint(equalTo: self.nutritionStackContainer.topAnchor).isActive = true
-        self.nutritionStack.bottomAnchor.constraint(equalTo: self.nutritionStackContainer.bottomAnchor).isActive = true
-        self.nutritionStack.trailingAnchor.constraint(equalTo: self.nutritionStackContainer.trailingAnchor).isActive = true
-        self.nutritionStack.leadingAnchor.constraint(equalTo: self.nutritionStackContainer.leadingAnchor).isActive = true
-    }
-    
-    private func ratingConstraints() {
-        self.rating.translatesAutoresizingMaskIntoConstraints = false
-        self.rating.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
-        self.rating.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 5).isActive = true
-        self.rating.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        // (height * number of stars) + (spacing * number of stars - 1)
-        self.rating.widthAnchor.constraint(equalToConstant: (20 * 4) + (5 * 3)).isActive = true
-    }
-    
-    private func likeConstraints() {
-        self.likeButton.translatesAutoresizingMaskIntoConstraints = false
-        self.likeButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
-        self.likeButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
-        self.likeButton.centerYAnchor.constraint(equalTo: self.image.topAnchor).isActive = true
-        self.likeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
-    }
-    
-    internal func squishLike() {
-        let isSquished = self.isIngredientsVisible ?? false
-        if !isSquished {
-            likeButton.transform = CGAffineTransform.identity
-        } else {
-            likeButton.transform = CGAffineTransform(translationX: 0, y: self.frame.height * 0.12)
-        }
-    }
-    
-}
 
-
-// MARK: - Modifying views of Recipe Cell Methods
-extension RecipeCell {
-    
-    private func modifyBackroundColor() {
+    func modifyColors() {
         self.backgroundSplash.backgroundColor = self.splashColor ?? UIColor.blue
+        self.ingredientsButton.backgroundColor = self.splashColor ?? UIColor.blue
+        self.likeButton.tintColor = self.splashColor ?? UIColor.blue
     }
+
+}
+    
+
+// MARK: - Modifying view PROPERTIES of Recipe Cell
+extension RecipeCell {
     
     private func modifyTitle() {
         self.title.textColor = .white
@@ -279,7 +169,7 @@ extension RecipeCell {
         self.recipeDescription.backgroundColor = .white
         self.recipeDescription.textAlignment = .left
         self.recipeDescription.isEditable = false
-        
+        self.recipeDescription.textColor = UIColor.black.withAlphaComponent(0.8)
         self.recipeDescription.font = UIFont.fontCoolvetica?.withSize(15)
     }
     
@@ -295,7 +185,6 @@ extension RecipeCell {
         // add function to call delegate method to handle pushing likes to server
         self.likeButton.backgroundColor = .white
         self.likeButton.setImage(UIImage(named: "heart2_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.likeButton.tintColor = self.splashColor ?? UIColor.blue
         self.likeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.likeButton.addTarget(self, action: #selector(self.userPressedLike), for: .touchUpInside)
     }

@@ -32,7 +32,12 @@ class IngredientsListCollectionView: UICollectionView, UICollectionViewDelegateF
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 50)
+        let cellPadding: CGFloat = 44
+        let ingredient = ingredients?[indexPath.item] ?? ""
+        var title = ""
+        title = ingredient
+//        let width = title.size(attributes: [NSFontAttributeName: BreadcrumbCell.itemFont]).width + cellPadding
+        return CGSize(width: 100, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

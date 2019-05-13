@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
     
     // MARK: - Setup and retrieve data methods
     // Setup of MainViewController
-    private func setup() {
+    internal func setup() {
         self.view.backgroundColor = .white
         self.addViews()
         self.addLoginButton()
@@ -104,10 +104,11 @@ extension MainViewController {
         self.recipeCollectionView = RecipeCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.frame.height), collectionViewLayout: UICollectionViewFlowLayout())
         guard let recipeCollectionView = self.recipeCollectionView else { return }
         recipeCollectionView.userFeedbackDelegate = self
+        recipeCollectionView.contentInset = UIEdgeInsets(top: -88, left: 0, bottom: 0, right: 0)
         self.view.addSubview(recipeCollectionView)
         
         recipeCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        recipeCollectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        recipeCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         recipeCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         recipeCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         recipeCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
@@ -118,7 +119,8 @@ extension MainViewController {
         let profileButton = UIButton(type: .custom)
         profileButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         profileButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        profileButton.setImage(UIImage(named: "user_hf.png"), for: .normal)
+        profileButton.tintColor = .white
+        profileButton.setImage(UIImage(named: "user_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
         profileButton.addTarget(self, action: #selector(self.presentLoginViewController), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
     }

@@ -62,9 +62,7 @@ class LoginForm: UIView, UITextFieldDelegate {
         self.submitButton.leadingAnchor.constraint(equalTo: self.userInfoStackView.leadingAnchor).isActive = true
         self.submitButton.trailingAnchor.constraint(equalTo: self.userInfoStackView.trailingAnchor).isActive = true
         self.submitButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        print(self.submitButton.frame)
         self.submitButton.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height * submitButtonHeightMultiplier)
-        print(self.submitButton.frame)
     }
     
     internal func modifyTextFields() {
@@ -89,7 +87,7 @@ class LoginForm: UIView, UITextFieldDelegate {
         self.submitButton.layer.borderWidth = 2
         self.submitButton.setTitle("Submit", for: .normal)
         self.submitButton.addShadow(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.submitButton.frame.width, height: self.submitButton.frame.height)),
-                                    color: .black,
+                                    color: UIColor.black.withAlphaComponent(0.8),
                                     offset: CGSize(width: 1.5, height: 1.5),
                                     radius: 8,
                                     opacity: 0.5)

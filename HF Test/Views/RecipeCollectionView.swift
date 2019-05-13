@@ -16,6 +16,17 @@ class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout
         self.setup()
     }
     
+    // MARK: - Cell Colors
+    let colors = [UIColor.color1,
+                  UIColor.color3,
+                  UIColor.color4,
+                  UIColor.color5,
+                  UIColor.color6,
+                  UIColor.color7,
+                  UIColor.color8,
+                  UIColor.color3,
+                  UIColor.color4]
+    
     // MARK: - Mutable Properties
     var recipes: [Recipe]? {
         didSet { self.reloadData() }
@@ -25,7 +36,7 @@ class RecipeCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout
     weak var userFeedbackDelegate: UserFeedbackDelegate?
     
     // MARK: - Setup
-    private func setup() {
+    internal func setup() {
         self.delegate = self
         self.dataSource = self
         self.backgroundColor = .white
@@ -69,6 +80,8 @@ extension RecipeCollectionView: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecipeCellId.recipe.rawValue, for: indexPath) as? RecipeCell {
+            cell.splashColor = self.colors[indexPath.item]
+            cell.modifyColors()
             cell.recipe = self.recipes?[indexPath.item]
             cell.userFeedbackDelegate = self.userFeedbackDelegate
             return cell

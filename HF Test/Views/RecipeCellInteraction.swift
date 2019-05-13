@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RecipeUserInteraction: RecipeCell {
+protocol RecipeUserInteractionDelegate: RecipeCell {
     
     func userPressedLike()
     func userPressedIngredients()
@@ -17,7 +17,7 @@ protocol RecipeUserInteraction: RecipeCell {
 }
 
 // MARK: - User Interaction methods
-extension RecipeCell: RecipeUserInteraction {
+extension RecipeCell: RecipeUserInteractionDelegate {
     
     @objc internal func userPressedLike() {
         if let isLiked = self.recipe?.isLiked {

@@ -15,6 +15,7 @@ class HF_TestTests: XCTestCase {
 
     override func setUp() {
         mainViewController = MainViewController()
+        
     }
 
     override func tearDown() {
@@ -74,6 +75,35 @@ class HF_TestTests: XCTestCase {
         let username4 = "DefaultUser123!@!@"
         let result4 = username4.validateEmail()
         XCTAssert(result4 == false, "Email is valid")
+    }
+    
+    func testLikeButtonPressed() {
+        mainViewController?.setup()
+        _ = mainViewController?.view
+        mainViewController?.recipeCollectionView?.setup()
+        
+        
+        let pred = NSPredicate(format: "%@[SIZE] >= 0", mainViewController?.recipes ?? [Recipe]())
+        let exp = expectation(for: pred, evaluatedWith: mainViewController?.recipes, handler: nil)
+        let result = XCTWaiter.wait(for: [exp], timeout: 5.0)
+        
+        guard let recipes = mainViewController?.recipes else {
+            XCTAssert(false, "recipes does not exist")
+            return
+        }
+        XCTAssert(result == XCTWaiter.Result.completed, "Recipes did not load")
+        
+        
+        print(mainViewController?.recipeCollectionView?.recipes?.count)
+        mainViewController?.recipeCollectionView?.reloadData()
+        
+        
+        if let cell = mainViewController?.recipeCollectionView?.cellForItem(at: IndexPath(item: 0, section: 0)) as? RecipeCell {
+            cell.userPressedLike()
+            if let recipeLike = cell.recipe?.isLiked {
+                XCTAssert(recipeLike == false, "Recipe like was not recorded")
+            }
+        }
     }
 
     func testPerformanceExample() {
