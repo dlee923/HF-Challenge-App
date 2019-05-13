@@ -48,7 +48,7 @@ class MainViewController: UIViewController {
             RecipeAPI.sharedInstance.downloadRecipeData(completion: { tempRecipes = $0 })
         }
         DispatchQueue.global().async {
-            if let recipes = tempRecipes {
+//            if let recipes = tempRecipes {
 //                for recipe in recipes {
 //                    dispatchGroup.enter()
 //                    let imageLink = recipe.recipeImageSource?.image ?? ""
@@ -58,7 +58,7 @@ class MainViewController: UIViewController {
 //                    })
 //                }
 //                dispatchGroup.wait()
-            }
+//            }
         }
         dispatchGroup.notify(queue: .global()) {
             DispatchQueue.main.async {

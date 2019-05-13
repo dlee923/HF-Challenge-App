@@ -15,7 +15,11 @@ class IngredientsListCollectionView: UICollectionView, UICollectionViewDelegateF
         self.setup()
     }
     
-    var ingredients: [String]?
+    var ingredients: [String]? {
+        didSet {
+            self.reloadData()
+        }
+    }
     
     private func setup() {
         self.backgroundColor = .gray

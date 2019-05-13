@@ -49,7 +49,7 @@ class RecipeCell: UICollectionViewCell {
     let calories = UILabel()
     let carbs = UILabel()
     let fats = UILabel()
-    var ingredientsView: IngredientsListCollectionView?
+    let ingredientsView = IngredientsListCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     lazy var ingredientsButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.BtnSizeMultiplier, height: self.frame.width * self.BtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     lazy var likeButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.BtnSizeMultiplier, height: self.frame.width * self.BtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     
@@ -72,6 +72,7 @@ class RecipeCell: UICollectionViewCell {
         self.nutritionConstraints()
         self.ratingConstraints()
         self.likeConstraints()
+        self.ingredientsViewConstraints()
         
         self.modifyColors()
         self.modifyTitle()
@@ -81,17 +82,21 @@ class RecipeCell: UICollectionViewCell {
         self.modifyNutritionStack()
         self.modifyLikeBtn()
         self.modifyRating()
+        self.modifyIngredientsView()
     }
     
     private func addViews() {
         self.addSubview(self.backgroundSplash)                          // Included
         self.addSubview(self.title)                                     // Included
-//        self.addSubview(self.subtitle)
+//        self.addSubview(self.subtitle)                                // NOT INCLUDED
         self.addSubview(self.rating)                                    // Included
-        self.addSubview(self.recipeDescription)                         // Included
         self.addSubview(self.likeButton)                                // Included
-//        self.addSubview(self.difficulty)
+//        self.addSubview(self.difficulty)                              // NOT INCLUDED
         self.addSubview(self.nutritionStackContainer)                   // Included
+        
+        self.addSubview(self.recipeDescription)                         // Included + must overlap ingredientsView in view heirarchy
+        self.addSubview(self.ingredientsView)                           // Included + must overlap nutritionStackContainer in view heirarchy
+        
         self.nutritionStackContainer.addSubview(self.nutritionStack)    // Included
         self.addSubview(self.ingredientsButton)                         // Included
         self.addSubview(self.imageShadow)                               // Included
@@ -133,9 +138,12 @@ class RecipeCell: UICollectionViewCell {
         self.ingredientsButtonBottomSquished?.isActive = false
         self.ingredientsButtonBottom?.isActive = true
         super.prepareForReuse()
-        if let isIngredientsVisible = self.isIngredientsVisible {
-            if isIngredientsVisible { self.removeIngredientsView() }
-        }
+        self.ingredientsButton.tintColor = .white
+        self.nutritionStackContainer.alpha = 1.0
+        self.ingredientsViewBottom?.isActive = true
+        self.ingredientsButtonBottomSquished?.isActive = false
+        self.ingredientsViewTop?.isActive = true
+        self.ingredientsViewTopSquished?.isActive = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -151,4 +159,11 @@ class RecipeCell: UICollectionViewCell {
     
     var ingredientsButtonBottom: NSLayoutConstraint?
     var ingredientsButtonBottomSquished: NSLayoutConstraint?
+    
+    var ingredientsViewBottom: NSLayoutConstraint?
+    var ingredientsViewTop: NSLayoutConstraint?
+    
+    var ingredientsViewBottomSquished: NSLayoutConstraint?
+    var ingredientsViewTopSquished: NSLayoutConstraint?
+    
 }

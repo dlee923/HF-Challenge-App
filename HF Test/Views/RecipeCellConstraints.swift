@@ -103,11 +103,11 @@ extension RecipeCell {
         }
     }
     
-    // MARK: - Nutrition Box
+    // MARK: - Nutrition Box + Animatable Constraints
     internal func nutritionConstraints() {
         self.nutritionStackContainer.translatesAutoresizingMaskIntoConstraints = false
-        self.nutritionStackContainer.topAnchor.constraint(equalTo: self.ingredientsButton.topAnchor).isActive = true
-        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor, constant: -5).isActive = true
+        self.nutritionStackContainer.heightAnchor.constraint(equalTo: self.ingredientsButton.heightAnchor, constant: -5).isActive = true
+        self.nutritionStackContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
         self.nutritionStackContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
         self.nutritionStackContainer.trailingAnchor.constraint(equalTo: self.ingredientsButton.leadingAnchor, constant: -sideMargin * 0.4).isActive = true
         
@@ -116,6 +116,15 @@ extension RecipeCell {
         self.nutritionStack.bottomAnchor.constraint(equalTo: self.nutritionStackContainer.bottomAnchor).isActive = true
         self.nutritionStack.trailingAnchor.constraint(equalTo: self.nutritionStackContainer.trailingAnchor).isActive = true
         self.nutritionStack.leadingAnchor.constraint(equalTo: self.nutritionStackContainer.leadingAnchor).isActive = true
+    }
+    
+    internal func squishNutrition() {
+        let isSquished = self.isIngredientsVisible ?? false
+        if !isSquished {
+            self.nutritionStackContainer.alpha = 1.0
+        } else {
+            self.nutritionStackContainer.alpha = 0.0
+        }
     }
     
     // MARK: - Rating
@@ -147,20 +156,32 @@ extension RecipeCell {
     }
     
     // MARK: - Ingredients VIEW + Animatable Constraints
-    internal func ingredientsConstraints() {
-        self.ingredientsView?.translatesAutoresizingMaskIntoConstraints = false
-        self.ingredientsView?.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
-        self.ingredientsView?.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
-        self.ingredientsView?.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
-        self.ingredientsView?.topAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor).isActive = true
+    internal func ingredientsViewConstraints() {
+        self.ingredientsView.translatesAutoresizingMaskIntoConstraints = false
+        self.ingredientsView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
+        ingredientsViewBottom = self.ingredientsView.bottomAnchor.constraint(equalTo: self.recipeDescription.bottomAnchor)
+        ingredientsViewBottom?.isActive = true
+        ingredientsViewBottomSquished = self.ingredientsView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        self.ingredientsView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
+        ingredientsViewTop = self.ingredientsView.topAnchor.constraint(equalTo: self.recipeDescription.topAnchor)
+        ingredientsViewTop?.isActive = true
+        ingredientsViewTopSquished = self.ingredientsView.topAnchor.constraint(equalTo: self.recipeDescription.bottomAnchor)
     }
     
     internal func squishIngredients() {
         let isSquished = self.isIngredientsVisible ?? false
         if !isSquished {
-            
+            print("unsquish ingredients")
+            self.ingredientsViewBottomSquished?.isActive = false
+            self.ingredientsViewTopSquished?.isActive = false
+            self.ingredientsViewBottom?.isActive = true
+            self.ingredientsViewTop?.isActive = true
         } else {
-            
+            print("squish")
+            self.ingredientsViewBottom?.isActive = false
+            self.ingredientsViewTop?.isActive = false
+            self.ingredientsViewBottomSquished?.isActive = true
+            self.ingredientsViewTopSquished?.isActive = true
         }
     }
 }

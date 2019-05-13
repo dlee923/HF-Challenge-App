@@ -19,25 +19,6 @@ extension RecipeCell {
     
 }
 
-// MARK: - Ingredients View Loading and Unloading
-extension RecipeCell {
-    
-    func insertIngredientsView() {
-        self.ingredientsView = IngredientsListCollectionView(frame: CGRect(x: 0,
-                                                                           y: 0,
-                                                                           width: self.frame.width,
-                                                                           height: self.frame.height * 0.3),
-                                                                           collectionViewLayout: UICollectionViewFlowLayout())
-        if let ingredientsView = self.ingredientsView {
-            self.addSubview(ingredientsView)
-        }
-    }
-    
-    func removeIngredientsView() {
-        
-    }
-}
-
 
 // MARK: - Modifying view PROPERTIES of Recipe Cell
 extension RecipeCell {
@@ -123,6 +104,11 @@ extension RecipeCell {
     
     internal func modifyRating() {
         self.rating.backgroundColor = .gray
+    }
+    
+    internal func modifyIngredientsView() {
+        self.ingredientsView.ingredients = self.recipe?.recipeInfo?.ingredients
+        self.ingredientsView.backgroundColor = .red
     }
     
 }
