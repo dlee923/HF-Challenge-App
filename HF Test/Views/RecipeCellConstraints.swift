@@ -81,13 +81,26 @@ extension RecipeCell {
         self.recipeDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
     }
     
-    // MARK: - Ingredients Button
+    // MARK: - Ingredients Button + Animatable Constraints
     internal func ingredientsButtonConstraints() {
         self.ingredientsButton.translatesAutoresizingMaskIntoConstraints = false
         self.ingredientsButton.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
         self.ingredientsButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.BtnSizeMultiplier).isActive = true
-        self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
         self.ingredientsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
+        ingredientsButtonBottom = self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
+        ingredientsButtonBottom?.isActive = true
+        ingredientsButtonBottomSquished = self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
+    }
+    
+    internal func squishIngredientsButton() {
+        let isSquished = self.isIngredientsVisible ?? false
+        if !isSquished {
+            ingredientsButtonBottomSquished?.isActive = false
+            ingredientsButtonBottom?.isActive = true
+        } else {
+            ingredientsButtonBottom?.isActive = false
+            ingredientsButtonBottomSquished?.isActive = true
+        }
     }
     
     // MARK: - Nutrition Box
@@ -133,4 +146,21 @@ extension RecipeCell {
         }
     }
     
+    // MARK: - Ingredients VIEW + Animatable Constraints
+    internal func ingredientsConstraints() {
+        self.ingredientsView?.translatesAutoresizingMaskIntoConstraints = false
+        self.ingredientsView?.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
+        self.ingredientsView?.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
+        self.ingredientsView?.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
+        self.ingredientsView?.topAnchor.constraint(equalTo: self.ingredientsButton.bottomAnchor).isActive = true
+    }
+    
+    internal func squishIngredients() {
+        let isSquished = self.isIngredientsVisible ?? false
+        if !isSquished {
+            
+        } else {
+            
+        }
+    }
 }

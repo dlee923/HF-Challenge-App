@@ -43,6 +43,7 @@ extension RecipeCell: RecipeUserInteractionDelegate {
             self.squishBackgroundSplash()
             self.squishImage()
             self.squishLike()
+            self.squishIngredientsButton()
             self.layoutIfNeeded()
         }, completion: nil)
     }

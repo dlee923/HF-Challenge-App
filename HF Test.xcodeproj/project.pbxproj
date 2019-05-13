@@ -67,6 +67,9 @@
 		704B11D92289840B00BC95E8 /* RecipeCellConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D82289840B00BC95E8 /* RecipeCellConstraints.swift */; };
 		704B11DA2289840B00BC95E8 /* RecipeCellConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D82289840B00BC95E8 /* RecipeCellConstraints.swift */; };
 		704B11DB2289840B00BC95E8 /* RecipeCellConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11D82289840B00BC95E8 /* RecipeCellConstraints.swift */; };
+		704B11DD228987C400BC95E8 /* RecipeCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11DC228987C400BC95E8 /* RecipeCellViews.swift */; };
+		704B11DE228987C400BC95E8 /* RecipeCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11DC228987C400BC95E8 /* RecipeCellViews.swift */; };
+		704B11DF228987C400BC95E8 /* RecipeCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11DC228987C400BC95E8 /* RecipeCellViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +122,7 @@
 		704B11D02288BB0F00BC95E8 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		704B11D42288C3B100BC95E8 /* RecipeCellInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellInteraction.swift; sourceTree = "<group>"; };
 		704B11D82289840B00BC95E8 /* RecipeCellConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellConstraints.swift; sourceTree = "<group>"; };
+		704B11DC228987C400BC95E8 /* RecipeCellViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +231,7 @@
 			children = (
 				704B11982286501600BC95E8 /* RecipeCollectionView.swift */,
 				704B119C2286518400BC95E8 /* RecipeCell.swift */,
+				704B11DC228987C400BC95E8 /* RecipeCellViews.swift */,
 				704B11D82289840B00BC95E8 /* RecipeCellConstraints.swift */,
 				704B11D42288C3B100BC95E8 /* RecipeCellInteraction.swift */,
 				704B11AE22878A2F00BC95E8 /* RecipeCellButton.swift */,
@@ -398,6 +403,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B11DD228987C400BC95E8 /* RecipeCellViews.swift in Sources */,
 				704B11D52288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11B422879FA200BC95E8 /* LoginViewController.swift in Sources */,
 				704B118E2284F97C00BC95E8 /* Recipe.swift in Sources */,
@@ -423,6 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B11DE228987C400BC95E8 /* RecipeCellViews.swift in Sources */,
 				704B11D62288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11922284FFC100BC95E8 /* User.swift in Sources */,
 				704B11C5228895F700BC95E8 /* RecipeCellButton.swift in Sources */,
@@ -448,6 +455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704B11DF228987C400BC95E8 /* RecipeCellViews.swift in Sources */,
 				704B11D72288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11CE228896D200BC95E8 /* LoginViewController.swift in Sources */,
 				704B119F2286518400BC95E8 /* RecipeCell.swift in Sources */,

@@ -29,6 +29,10 @@ class RecipeCell: UICollectionViewCell {
             }
         }
     }
+    var recipe: Recipe? {
+        didSet { self.loadRecipeData() }
+    }
+    var splashColor: UIColor?
     
     // MARK: - UI Elements
     let backgroundSplash = UIView()
@@ -45,6 +49,7 @@ class RecipeCell: UICollectionViewCell {
     let calories = UILabel()
     let carbs = UILabel()
     let fats = UILabel()
+    var ingredientsView: IngredientsListCollectionView?
     lazy var ingredientsButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.BtnSizeMultiplier, height: self.frame.width * self.BtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     lazy var likeButton = RecipeCellButton(frame: CGRect(x: 0, y: 0, width: self.frame.width * self.BtnSizeMultiplier, height: self.frame.width * self.BtnSizeMultiplier), color: self.splashColor ?? UIColor.blue)
     
@@ -52,10 +57,6 @@ class RecipeCell: UICollectionViewCell {
     weak var userFeedbackDelegate: UserFeedbackDelegate?
     
     // Margin padding property - influenced by sideMarginMultiplier in static properties
-    var recipe: Recipe? {
-        didSet { self.loadRecipeData() }
-    }
-    var splashColor: UIColor?
     var sideMargin: CGFloat { return self.frame.width * self.sideMarginMultiplier }
     
     // MARK: - Setup Methods
@@ -85,11 +86,11 @@ class RecipeCell: UICollectionViewCell {
     private func addViews() {
         self.addSubview(self.backgroundSplash)                          // Included
         self.addSubview(self.title)                                     // Included
-        self.addSubview(self.subtitle)
+//        self.addSubview(self.subtitle)
         self.addSubview(self.rating)                                    // Included
         self.addSubview(self.recipeDescription)                         // Included
         self.addSubview(self.likeButton)                                // Included
-        self.addSubview(self.difficulty)
+//        self.addSubview(self.difficulty)
         self.addSubview(self.nutritionStackContainer)                   // Included
         self.nutritionStackContainer.addSubview(self.nutritionStack)    // Included
         self.addSubview(self.ingredientsButton)                         // Included
@@ -129,7 +130,12 @@ class RecipeCell: UICollectionViewCell {
         self.image.transform = CGAffineTransform.identity
         self.likeButton.transform = CGAffineTransform.identity
         self.rating.prepareForReuse()
+        self.ingredientsButtonBottomSquished?.isActive = false
+        self.ingredientsButtonBottom?.isActive = true
         super.prepareForReuse()
+        if let isIngredientsVisible = self.isIngredientsVisible {
+            if isIngredientsVisible { self.removeIngredientsView() }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -142,106 +148,7 @@ class RecipeCell: UICollectionViewCell {
     
     var imageShadowBottom: NSLayoutConstraint?
     var imageBottom: NSLayoutConstraint?
-}
-
-
-// MARK: - Modifying COLORS of Recipe Cell
-extension RecipeCell {
-
-    func modifyColors() {
-        self.backgroundSplash.backgroundColor = self.splashColor ?? UIColor.blue
-        self.ingredientsButton.backgroundColor = self.splashColor ?? UIColor.blue
-        self.likeButton.tintColor = self.splashColor ?? UIColor.blue
-    }
-
-}
     
-
-// MARK: - Modifying view PROPERTIES of Recipe Cell
-extension RecipeCell {
-    
-    private func modifyTitle() {
-        self.title.textColor = .white
-        self.title.font = UIFont.fontBebas?.withSize(40)
-    }
-    
-    private func modifyDescription() {
-        self.recipeDescription.backgroundColor = .white
-        self.recipeDescription.textAlignment = .left
-        self.recipeDescription.isEditable = false
-        self.recipeDescription.textColor = UIColor.black.withAlphaComponent(0.8)
-        self.recipeDescription.font = UIFont.fontCoolvetica?.withSize(15)
-    }
-    
-    private func modifyIngredientsBtn() {
-        // add function to animate collectionView new layout and create ingredients view
-        self.ingredientsButton.setImage(UIImage(named: "ingredients_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.ingredientsButton.tintColor = .white
-        self.ingredientsButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        self.ingredientsButton.addTarget(self, action: #selector(self.userPressedIngredients), for: .touchUpInside)
-    }
-    
-    private func modifyLikeBtn() {
-        // add function to call delegate method to handle pushing likes to server
-        self.likeButton.backgroundColor = .white
-        self.likeButton.setImage(UIImage(named: "heart2_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.likeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        self.likeButton.addTarget(self, action: #selector(self.userPressedLike), for: .touchUpInside)
-    }
-    
-    private func modifyNutritionStack() {
-        self.nutritionStackContainer.backgroundColor = .white
-        
-        let proteinLbl = UILabel()
-        proteinLbl.text = "Protein"
-        let fatsLbl = UILabel()
-        fatsLbl.text = "Fats"
-        let carbsLbl = UILabel()
-        carbsLbl.text = "Carbos"
-        let caloriesLbl = UILabel()
-        caloriesLbl.text = "Cal."
-        
-        let labelStackView = UIStackView(arrangedSubviews: [proteinLbl, fatsLbl, carbsLbl, caloriesLbl])
-        labelStackView.stackProperties(axis: .horizontal, spacing: 5, alignment: .fill, distribution: .fillEqually)
-        
-        let dataStackView = UIStackView(arrangedSubviews: [self.protein, self.fats, self.carbs, self.calories])
-        dataStackView.stackProperties(axis: .horizontal, spacing: 5, alignment: .fill, distribution: .fillEqually)
-        
-        let nutritionStackSubviews = [labelStackView, dataStackView]
-        
-        for stackView in nutritionStackSubviews {
-            for view in stackView.arrangedSubviews {
-                if let label = view as? UILabel {
-                    label.font = UIFont.fontCoolvetica?.withSize(12)
-                    label.textColor = UIColor.black.withAlphaComponent(0.9)
-                }
-            }
-        }
-        
-        self.nutritionStack.addArrangedSubview(labelStackView)
-        self.nutritionStack.addArrangedSubview(dataStackView)
-        self.nutritionStack.stackProperties(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
-    }
-    
-    private func modifyImage() {
-        self.image.contentMode = .scaleAspectFill
-        self.image.backgroundColor = .white
-        self.image.layer.cornerRadius = (self.frame.width * self.imageWidthMultiplier) / 2
-        self.image.layer.borderColor = UIColor.white.cgColor
-        self.image.layer.borderWidth = 2
-        
-        self.image.clipsToBounds = true
-        
-        self.imageShadow.frame = CGRect(x: 0, y: 0, width: (self.frame.width * self.imageWidthMultiplier), height: (self.frame.width * self.imageWidthMultiplier))
-        self.imageShadow.addShadow(path: UIBezierPath(ovalIn: self.imageShadow.layer.bounds),
-                                   color: .black,
-                                   offset: CGSize(width: 3.0, height: 3.0),
-                                   radius: 15,
-                                   opacity: 0.5)
-    }
-    
-    private func modifyRating() {
-        self.rating.backgroundColor = .gray
-    }
-    
+    var ingredientsButtonBottom: NSLayoutConstraint?
+    var ingredientsButtonBottomSquished: NSLayoutConstraint?
 }
