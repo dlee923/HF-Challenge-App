@@ -16,10 +16,10 @@ class RecipeCell: UICollectionViewCell {
         self.setup()
     }
     
-    // MARK: - Static Properties
-    let imageWidthMultiplier: CGFloat = 0.65
+    // MARK: - Layout Properties
+    let imageWidthMultiplier: CGFloat = DeviceViews.imageWidthMultiplier[Device.current.deviceType] ?? 0.65
     let sideMarginMultiplier: CGFloat = 0.12
-    let BtnSizeMultiplier: CGFloat = 0.13
+    let BtnSizeMultiplier: CGFloat = DeviceViews.BtnSizeMultiplier[Device.current.deviceType] ?? 0.13
     
     // MARK: - Mutable Properties
     var isIngredientsVisible: Bool? {

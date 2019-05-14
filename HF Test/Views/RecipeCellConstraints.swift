@@ -36,7 +36,8 @@ extension RecipeCell {
     // MARK: - Title
     internal func titleConstraints() {
         self.title.translatesAutoresizingMaskIntoConstraints = false
-        self.title.topAnchor.constraint(equalTo: self.topAnchor, constant: 88).isActive = true
+        let inset = (DeviceViews.statusBarNavBarHeight[Device.current.deviceType] ?? 0.0)
+        self.title.topAnchor.constraint(equalTo: self.topAnchor, constant: inset).isActive = true
         self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: sideMargin * 0.8).isActive = true
         self.title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
         self.title.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -165,7 +166,7 @@ extension RecipeCell {
         self.ingredientsView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin * 0.8).isActive = true
         ingredientsViewTop = self.ingredientsView.topAnchor.constraint(equalTo: self.recipeDescription.topAnchor)
         ingredientsViewTop?.isActive = true
-        ingredientsViewTopSquished = self.ingredientsView.topAnchor.constraint(equalTo: self.recipeDescription.bottomAnchor)
+        ingredientsViewTopSquished = self.ingredientsView.topAnchor.constraint(equalTo: self.recipeDescription.bottomAnchor, constant: -5)
     }
     
     internal func squishIngredients() {

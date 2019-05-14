@@ -33,7 +33,8 @@ extension RecipeCell {
         self.recipeDescription.textAlignment = .left
         self.recipeDescription.isEditable = false
         self.recipeDescription.textColor = UIColor.black.withAlphaComponent(0.8)
-        self.recipeDescription.font = UIFont.fontCoolvetica?.withSize(15)
+        let descripFontSize = DeviceViews.recipeDescriptionFontSize[Device.current.deviceType] ?? 15
+        self.recipeDescription.font = UIFont.fontCoolvetica?.withSize(descripFontSize)
     }
     
     internal func modifyIngredientsBtn() {
@@ -70,11 +71,12 @@ extension RecipeCell {
         dataStackView.stackProperties(axis: .horizontal, spacing: 5, alignment: .fill, distribution: .fillEqually)
         
         let nutritionStackSubviews = [labelStackView, dataStackView]
+        let nutritionFontSize = DeviceViews.nutritionFontSize[Device.current.deviceType] ?? 12
         
         for stackView in nutritionStackSubviews {
             for view in stackView.arrangedSubviews {
                 if let label = view as? UILabel {
-                    label.font = UIFont.fontCoolvetica?.withSize(12)
+                    label.font = UIFont.fontCoolvetica?.withSize(nutritionFontSize)
                     label.textColor = UIColor.black.withAlphaComponent(0.9)
                 }
             }
@@ -108,7 +110,7 @@ extension RecipeCell {
     }
     
     internal func modifyIngredientsView() {
-        let ingredientButtonHeight = (self.frame.width * self.BtnSizeMultiplier) + 10
+        let ingredientButtonHeight = (self.frame.width * self.BtnSizeMultiplier) + 15
         self.ingredientsView.headerHeight = ingredientButtonHeight
         self.ingredientsView.alpha = 0.0
     }

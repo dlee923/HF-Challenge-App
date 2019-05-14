@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
+        Device.current.retrieveDeviceDetails()
     }
     
     // MARK: - Mutable Properties
@@ -110,7 +111,8 @@ extension MainViewController {
         self.recipeCollectionView = RecipeCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.frame.height), collectionViewLayout: UICollectionViewFlowLayout())
         guard let recipeCollectionView = self.recipeCollectionView else { return }
         recipeCollectionView.userFeedbackDelegate = self
-        recipeCollectionView.contentInset = UIEdgeInsets(top: -88, left: 0, bottom: 0, right: 0)
+        let inset = -(DeviceViews.statusBarNavBarHeight[Device.current.deviceType] ?? 0.0)
+        recipeCollectionView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: 0, right: 0)
         self.view.addSubview(recipeCollectionView)
         
         recipeCollectionView.translatesAutoresizingMaskIntoConstraints = false
