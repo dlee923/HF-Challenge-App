@@ -20,6 +20,7 @@ class RatingView: UIStackView {
     // MARK: - Mutable Properties
     var rating: Int?
     weak var recipeUserInteractionDelegate: RecipeUserInteractionDelegate?
+    var isRated: Bool?
     
     // MARK: - UI elements
     let star1 = UIButton(type: .custom)
@@ -49,12 +50,22 @@ class RatingView: UIStackView {
     // MARK: - Rating button actions
     @objc private func didRateRecipe(button: UIButton) {
         let index = self.arrangedSubviews.firstIndex(of: button) ?? 0
-        
+        var ratingScore: Int!
         // Setting rating of recipe
-        self.rating = index
+        if let isRated = self.isRated {
+            // if rated then set to 0 otherwise open to rate
+            ratingScore = isRated ? 0 : index
+            self.rating = ratingScore
+            self.isRated = isRated ? false : true
+        } else {
+            // if self.isRated is nil then no rating exists and open to rate
+            ratingScore = index
+            self.rating = ratingScore
+            self.isRated = true
+        }
         
         // Highlight stars
-        self.highlightStars(rating: index)
+        self.highlightStars(rating: ratingScore)
         
         self.recipeUserInteractionDelegate?.userPressedRating()
     }
@@ -65,8 +76,11 @@ class RatingView: UIStackView {
             for y in 0...3 {
                 views[y].tintColor = .white
             }
-            for x in 0...rating {
-                views[x].tintColor = .orange
+            guard let isRated = self.isRated else { return }
+            if isRated {
+                for x in 0...rating {
+                    views[x].tintColor = .orange
+                }
             }
         }
     }

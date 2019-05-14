@@ -45,19 +45,15 @@ class HF_TestUITests: XCTestCase {
         let starHfElementsQuery = app.collectionViews.cells.otherElements.containing(.button, identifier:"star hf")
         starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 0).tap()
         let alert = app.alerts["Thank you!"].staticTexts["Thank you!"]
-        XCTAssertTrue(alert.waitForExistence(timeout: 1.0), "Missing rating alert.")
-        
+        XCTAssertTrue(alert.waitForExistence(timeout: 0.2), "Missing rating alert.")
+    }
+    
+    func testRecipeRateCancelled() {
+        let starHfElementsQuery = app.collectionViews.cells.otherElements.containing(.button, identifier:"star hf")
+        starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 0).tap()
         starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 1).tap()
-        let alert1 = app.alerts["Thank you!"].staticTexts["Thank you!"]
-        XCTAssertTrue(alert1.waitForExistence(timeout: 1.0), "Missing rating alert.")
-        
-        starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 2).tap()
-        let alert2 = app.alerts["Thank you!"].staticTexts["Thank you!"]
-        XCTAssertTrue(alert2.waitForExistence(timeout: 1.0), "Missing rating alert.")
-        
-        starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 3).tap()
-        let alert3 = app.alerts["Thank you!"].staticTexts["Thank you!"]
-        XCTAssertTrue(alert3.waitForExistence(timeout: 1.0), "Missing rating alert.")
+        let alert1 = app.alerts["Cancelled!"].staticTexts["Cancelled!"]
+        XCTAssertTrue(alert1.waitForExistence(timeout: 0.2), "Missing cancel rating alert.")
     }
     
     func testLoginViewControllerNavigation() {

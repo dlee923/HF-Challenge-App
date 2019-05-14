@@ -55,7 +55,7 @@ extension RecipeCell: RecipeUserInteractionDelegate {
             // Set recipe object rating here
             self.recipe?.userRating = rating
             // Command view controller to send rating to server
-            self.userFeedbackDelegate?.userRated(rating: rating)
+            self.userFeedbackDelegate?.userRated(rating: rating, isRated: self.rating.isRated ?? false)
         }
     }
     

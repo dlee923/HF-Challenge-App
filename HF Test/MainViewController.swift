@@ -75,7 +75,7 @@ class MainViewController: UIViewController {
 
 protocol UserFeedbackDelegate: MainViewController {
     func userLiked(liked: Bool)
-    func userRated(rating: Int)
+    func userRated(rating: Int, isRated: Bool)
 }
 
 // MARK: - Webservice methods from user interaction (Sending likes to server)
@@ -91,9 +91,15 @@ extension MainViewController: UserFeedbackDelegate {
         }
     }
     
-    internal func userRated(rating: Int) {
+    internal func userRated(rating: Int, isRated: Bool) {
         print("Sending rating of \(rating) to server.")
-        let ratingPrompt = UIAlertController().simpleAlertPrompt(title: "Thank you!", message: "Your rating has been submitted", preferredStyle: .alert, actionTitle: nil)
+        var ratingPrompt_: UIAlertController?
+        if !isRated {
+            ratingPrompt_ = UIAlertController().simpleAlertPrompt(title: "Cancelled!", message: "Your rating has been cancelled", preferredStyle: .alert, actionTitle: nil)
+        } else {
+            ratingPrompt_ = UIAlertController().simpleAlertPrompt(title: "Thank you!", message: "Your rating has been submitted", preferredStyle: .alert, actionTitle: nil)
+        }
+        guard let ratingPrompt = ratingPrompt_ else { return }
         self.present(ratingPrompt, animated: true, completion: {
             Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { _ in
                 ratingPrompt.dismiss(animated: true, completion: nil)
