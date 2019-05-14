@@ -89,7 +89,7 @@ extension RecipeCell {
         self.ingredientsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -sideMargin / 2).isActive = true
         ingredientsButtonBottom = self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ingredientsButtonBottom?.isActive = true
-        ingredientsButtonBottomSquished = self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
+        ingredientsButtonBottomSquished = self.ingredientsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -150)
     }
     
     internal func squishIngredientsButton() {
@@ -171,13 +171,11 @@ extension RecipeCell {
     internal func squishIngredients() {
         let isSquished = self.isIngredientsVisible ?? false
         if !isSquished {
-            print("unsquish ingredients")
             self.ingredientsViewBottomSquished?.isActive = false
             self.ingredientsViewTopSquished?.isActive = false
             self.ingredientsViewBottom?.isActive = true
             self.ingredientsViewTop?.isActive = true
         } else {
-            print("squish")
             self.ingredientsViewBottom?.isActive = false
             self.ingredientsViewTop?.isActive = false
             self.ingredientsViewBottomSquished?.isActive = true

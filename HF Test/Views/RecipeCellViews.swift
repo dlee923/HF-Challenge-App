@@ -29,7 +29,7 @@ extension RecipeCell {
     }
     
     internal func modifyDescription() {
-        self.recipeDescription.backgroundColor = .orange
+        self.recipeDescription.backgroundColor = .white
         self.recipeDescription.textAlignment = .left
         self.recipeDescription.isEditable = false
         self.recipeDescription.textColor = UIColor.black.withAlphaComponent(0.8)
@@ -104,11 +104,6 @@ extension RecipeCell {
     
     internal func modifyRating() {
         self.rating.backgroundColor = .gray
-    }
-    
-    internal func modifyIngredientsView() {
-        self.ingredientsView.ingredients = self.recipe?.recipeInfo?.ingredients
-        self.ingredientsView.backgroundColor = .red
     }
     
 }

@@ -9,22 +9,32 @@
 import UIKit
 
 class IngredientsListCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
+    
+    // MARK: - Initialization
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         self.setup()
     }
     
+    // MARK: - Mutable Properties
     var ingredients: [String]? {
         didSet {
             self.reloadData()
         }
     }
+    var splashColor: UIColor?
     
+    // MARK: - Setup Methods
     private func setup() {
-        self.backgroundColor = .gray
+        self.backgroundColor = .white
         self.delegate = self
         self.dataSource = self
+        self.registerCells()
+    }
+    
+    private func registerCells() {
+        self.register(IngredientsPillCell.self, forCellWithReuseIdentifier: "ingredientsPillCell")
+        self.register(IngredientsHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ingredientsHeader")
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -35,17 +45,45 @@ class IngredientsListCollectionView: UICollectionView, UICollectionViewDelegateF
         return ingredients?.count ?? 0
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    // MARK: - Header Cell Methods
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ingredientsHeader", for: indexPath) as? IngredientsHeader {
+            header.title.textColor = self.splashColor
+            return header
+        } else {
+            return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: self.frame.width, height: 50)
+    }
+    
+    // MARK: - Cell Methods
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellPadding: CGFloat = 44
+        let cellPadding: CGFloat = 25
         let ingredient = ingredients?[indexPath.item] ?? ""
         var title = ""
         title = ingredient
-//        let width = title.size(attributes: [NSFontAttributeName: BreadcrumbCell.itemFont]).width + cellPadding
-        return CGSize(width: 100, height: 50)
+        if let font = IngredientsPillCell.ingredientPillFont {
+            let width = title.size(withAttributes: [NSAttributedString.Key.font: font]).width + cellPadding
+            return CGSize(width: width, height: 30)
+        } else {
+            return CGSize.zero
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ingredientsPillCell", for: indexPath) as? IngredientsPillCell {
+            cell.ingredient.text = self.ingredients?[indexPath.item]
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

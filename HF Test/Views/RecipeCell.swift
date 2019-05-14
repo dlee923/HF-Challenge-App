@@ -32,7 +32,11 @@ class RecipeCell: UICollectionViewCell {
     var recipe: Recipe? {
         didSet { self.loadRecipeData() }
     }
-    var splashColor: UIColor?
+    var splashColor: UIColor? {
+        didSet {
+            self.ingredientsView.splashColor = self.splashColor
+        }
+    }
     
     // MARK: - UI Elements
     let backgroundSplash = UIView()
@@ -82,7 +86,6 @@ class RecipeCell: UICollectionViewCell {
         self.modifyNutritionStack()
         self.modifyLikeBtn()
         self.modifyRating()
-        self.modifyIngredientsView()
     }
     
     private func addViews() {
@@ -93,10 +96,8 @@ class RecipeCell: UICollectionViewCell {
         self.addSubview(self.likeButton)                                // Included
 //        self.addSubview(self.difficulty)                              // NOT INCLUDED
         self.addSubview(self.nutritionStackContainer)                   // Included
-        
-        self.addSubview(self.recipeDescription)                         // Included + must overlap ingredientsView in view heirarchy
         self.addSubview(self.ingredientsView)                           // Included + must overlap nutritionStackContainer in view heirarchy
-        
+        self.addSubview(self.recipeDescription)                         // Included + must overlap ingredientsView in view heirarchy
         self.nutritionStackContainer.addSubview(self.nutritionStack)    // Included
         self.addSubview(self.ingredientsButton)                         // Included
         self.addSubview(self.imageShadow)                               // Included
@@ -124,6 +125,7 @@ class RecipeCell: UICollectionViewCell {
             print(userRating)
             self.rating.highlightStars(rating: userRating)
         }
+        self.ingredientsView.ingredients = self.recipe?.recipeInfo?.ingredients
     }
     
     // reset reusable cell's default color and other non content properties
@@ -140,10 +142,10 @@ class RecipeCell: UICollectionViewCell {
         super.prepareForReuse()
         self.ingredientsButton.tintColor = .white
         self.nutritionStackContainer.alpha = 1.0
-        self.ingredientsViewBottom?.isActive = true
+        self.ingredientsViewTopSquished?.isActive = false
         self.ingredientsButtonBottomSquished?.isActive = false
         self.ingredientsViewTop?.isActive = true
-        self.ingredientsViewTopSquished?.isActive = false
+        self.ingredientsViewBottom?.isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
