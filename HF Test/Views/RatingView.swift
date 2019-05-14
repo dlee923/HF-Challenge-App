@@ -38,6 +38,7 @@ class RatingView: UIStackView {
         }
     }
     
+    // This method only changes rating stars appearance
     private func modifyStars(button: UIButton) {
         if button.buttonType == UIButton.ButtonType.custom {
             button.setImage(UIImage(named: "star_hf.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -58,6 +59,7 @@ class RatingView: UIStackView {
         self.recipeUserInteractionDelegate?.userPressedRating()
     }
     
+    // Method highlights correct amount of stars based on rating.
     func highlightStars(rating: Int) {
         if let views = self.arrangedSubviews as? [UIButton] {
             for y in 0...3 {
@@ -69,6 +71,7 @@ class RatingView: UIStackView {
         }
     }
     
+    // Resetting star colors for reusable cells in collection/tableviews
     func prepareForReuse() {
         if let views = self.arrangedSubviews as? [UIButton] {
             for y in 0...3 {

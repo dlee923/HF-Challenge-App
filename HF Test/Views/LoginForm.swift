@@ -22,7 +22,7 @@ class LoginForm: UIView, UITextFieldDelegate {
         self.modifySubmitButton()
     }
     
-    // MARK: - Static Properties
+    // MARK: - Constant Properties
     let submitButtonHeightMultiplier: CGFloat = 0.25
     
     // MARK: - Mutable Properties
@@ -37,7 +37,7 @@ class LoginForm: UIView, UITextFieldDelegate {
     let userInfoStackView = UIStackView()
     let submitButton = UIButton()
     
-    // MARK: - Setup methods and adding views
+    // MARK: - Setup methods and adding and modifying views
     internal func addUserInputBox() {
         self.addSubview(userInfoStackView)
         self.userInfoStackView.addArrangedSubview(self.userLbl)
@@ -84,7 +84,6 @@ class LoginForm: UIView, UITextFieldDelegate {
         self.submitButton.layer.cornerRadius = 10
         self.submitButton.backgroundColor = UIColor.color1
         self.submitButton.setTitleColor(.black, for: .normal)
-//        self.submitButton.layer.borderWidth = 2
         self.submitButton.setTitle("Submit", for: .normal)
         self.submitButton.addShadow(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.submitButton.frame.width, height: self.submitButton.frame.height)),
                                     color: UIColor.black.withAlphaComponent(0.8),

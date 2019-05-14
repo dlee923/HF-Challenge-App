@@ -40,7 +40,6 @@ extension String {
     }
     
     func validateEmail() -> Bool {
-//        let result = self.range(of: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}", options: .regularExpression)
         let result = self.range(of: "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", options: .regularExpression)
         return result != nil ? true : false
     }
@@ -48,7 +47,7 @@ extension String {
 }
 
 extension UIAlertController {
-    
+    // Helper method to creating alert prompts
     func simpleAlertPrompt(title: String, message: String, preferredStyle: UIAlertController.Style, actionTitle: String?) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         if let actionTitleInput = actionTitle {
