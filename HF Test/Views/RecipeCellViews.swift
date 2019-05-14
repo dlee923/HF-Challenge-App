@@ -104,6 +104,13 @@ extension RecipeCell {
     
     internal func modifyRating() {
         self.rating.backgroundColor = .gray
+        self.rating.recipeUserInteractionDelegate = self
+    }
+    
+    internal func modifyIngredientsView() {
+        let ingredientButtonHeight = (self.frame.width * self.BtnSizeMultiplier) + 10
+        self.ingredientsView.headerHeight = ingredientButtonHeight
+        self.ingredientsView.alpha = 0.0
     }
     
 }

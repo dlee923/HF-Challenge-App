@@ -86,6 +86,7 @@ class RecipeCell: UICollectionViewCell {
         self.modifyNutritionStack()
         self.modifyLikeBtn()
         self.modifyRating()
+        self.modifyIngredientsView()
     }
     
     private func addViews() {
@@ -121,8 +122,6 @@ class RecipeCell: UICollectionViewCell {
             self.likeButton.tintColor = isLiked ? UIColor.color2 : self.splashColor ?? UIColor.blue
         }
         if let userRating = self.recipe?.userRating {
-            print(recipe?.recipeInfo?.name)
-            print(userRating)
             self.rating.highlightStars(rating: userRating)
         }
         self.ingredientsView.ingredients = self.recipe?.recipeInfo?.ingredients

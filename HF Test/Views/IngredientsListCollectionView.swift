@@ -23,6 +23,7 @@ class IngredientsListCollectionView: UICollectionView, UICollectionViewDelegateF
         }
     }
     var splashColor: UIColor?
+    var headerHeight: CGFloat?
     
     // MARK: - Setup Methods
     private func setup() {
@@ -60,7 +61,7 @@ class IngredientsListCollectionView: UICollectionView, UICollectionViewDelegateF
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: self.frame.width, height: 50)
+        return CGSize(width: self.frame.width, height: self.headerHeight ?? 10)
     }
     
     // MARK: - Cell Methods

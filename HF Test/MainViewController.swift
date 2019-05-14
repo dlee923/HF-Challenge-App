@@ -92,6 +92,12 @@ extension MainViewController: UserFeedbackDelegate {
     
     internal func userRated(rating: Int) {
         print("Sending rating of \(rating) to server.")
+        let ratingPrompt = UIAlertController().simpleAlertPrompt(title: "Thank you!", message: "Your rating has been submitted", preferredStyle: .alert, actionTitle: nil)
+        self.present(ratingPrompt, animated: true, completion: {
+            Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { _ in
+                ratingPrompt.dismiss(animated: true, completion: nil)
+            })
+        })
     }
 }
 

@@ -175,11 +175,13 @@ extension RecipeCell {
             self.ingredientsViewTopSquished?.isActive = false
             self.ingredientsViewBottom?.isActive = true
             self.ingredientsViewTop?.isActive = true
+            self.ingredientsView.alpha = 0.0
         } else {
             self.ingredientsViewBottom?.isActive = false
             self.ingredientsViewTop?.isActive = false
             self.ingredientsViewBottomSquished?.isActive = true
             self.ingredientsViewTopSquished?.isActive = true
+            self.ingredientsView.alpha = 1.0
         }
     }
 }
