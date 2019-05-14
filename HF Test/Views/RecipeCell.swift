@@ -138,13 +138,13 @@ class RecipeCell: UICollectionViewCell {
         self.rating.prepareForReuse()
         self.ingredientsButtonBottomSquished?.isActive = false
         self.ingredientsButtonBottom?.isActive = true
-        super.prepareForReuse()
         self.ingredientsButton.tintColor = .white
         self.nutritionStackContainer.alpha = 1.0
         self.ingredientsViewTopSquished?.isActive = false
-        self.ingredientsButtonBottomSquished?.isActive = false
+        self.ingredientsViewBottomSquished?.isActive = false
         self.ingredientsViewTop?.isActive = true
         self.ingredientsViewBottom?.isActive = true
+        super.prepareForReuse()
     }
     
     required init?(coder aDecoder: NSCoder) {

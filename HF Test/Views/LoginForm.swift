@@ -84,13 +84,13 @@ class LoginForm: UIView, UITextFieldDelegate {
         self.submitButton.layer.cornerRadius = 10
         self.submitButton.backgroundColor = UIColor.color1
         self.submitButton.setTitleColor(.black, for: .normal)
-        self.submitButton.layer.borderWidth = 2
+//        self.submitButton.layer.borderWidth = 2
         self.submitButton.setTitle("Submit", for: .normal)
         self.submitButton.addShadow(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.submitButton.frame.width, height: self.submitButton.frame.height)),
                                     color: UIColor.black.withAlphaComponent(0.8),
                                     offset: CGSize(width: 1.5, height: 1.5),
-                                    radius: 8,
-                                    opacity: 0.5)
+                                    radius: 4,
+                                    opacity: 0.3)
         self.submitButton.addTarget(self, action: #selector(submitButtonMethod), for: .touchUpInside)
     }
     
