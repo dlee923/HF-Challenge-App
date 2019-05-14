@@ -15,11 +15,27 @@ class HF_TestTests: XCTestCase {
 
     override func setUp() {
         mainViewController = MainViewController()
-        
+        UIApplication.shared.keyWindow?.rootViewController = mainViewController
+        XCTAssertNotNil(mainViewController?.view, "viewcontroller did not load")
     }
 
     override func tearDown() {
         mainViewController = nil
+    }
+    
+    func downloadRecipeData() {
+        mainViewController?.setup()
+        mainViewController?.recipeCollectionView?.setup()
+        
+        let pred = NSPredicate(format: "%@[SIZE] >= 0", mainViewController?.recipes ?? [Recipe]())
+        let exp = expectation(for: pred, evaluatedWith: mainViewController?.recipes, handler: nil)
+        let result = XCTWaiter.wait(for: [exp], timeout: 5.0)
+        
+        guard let recipes = mainViewController?.recipes else {
+            XCTAssert(false, "recipes does not exist")
+            return
+        }
+        XCTAssert(result == XCTWaiter.Result.completed, "Recipes did not load")
     }
 
     func testUsernameIsAlphaNumeric() {
@@ -77,12 +93,20 @@ class HF_TestTests: XCTestCase {
         XCTAssert(result4 == false, "Email is valid")
     }
     
-    func testLikeButtonPressed() {
+    func testLikeRecorded() {
+        downloadRecipeData()
+        mainViewController?.recipeCollectionView?.reloadData()
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.5))
+        
+        let cell = mainViewController?.recipeCollectionView?.cellForItem(at: IndexPath(item: 0, section: 0)) as! RecipeCell
+        cell.userPressedLike()
+        let recipeLike = (cell.recipe?.isLiked)!
+        XCTAssertTrue(recipeLike, "Recipe like was not recorded")
+        
+    }
+    
+    func testDownloadingData() {
         mainViewController?.setup()
-        _ = mainViewController?.view
-        mainViewController?.recipeCollectionView?.setup()
-        
-        
         let pred = NSPredicate(format: "%@[SIZE] >= 0", mainViewController?.recipes ?? [Recipe]())
         let exp = expectation(for: pred, evaluatedWith: mainViewController?.recipes, handler: nil)
         let result = XCTWaiter.wait(for: [exp], timeout: 5.0)
@@ -93,17 +117,9 @@ class HF_TestTests: XCTestCase {
         }
         XCTAssert(result == XCTWaiter.Result.completed, "Recipes did not load")
         
+        let recipeCount = (mainViewController?.recipes?.count)!
         
-        print(mainViewController?.recipeCollectionView?.recipes?.count)
-        mainViewController?.recipeCollectionView?.reloadData()
-        
-        
-        if let cell = mainViewController?.recipeCollectionView?.cellForItem(at: IndexPath(item: 0, section: 0)) as? RecipeCell {
-            cell.userPressedLike()
-            if let recipeLike = cell.recipe?.isLiked {
-                XCTAssert(recipeLike == false, "Recipe like was not recorded")
-            }
-        }
+        XCTAssertTrue(recipeCount > 0, "Data was not downloaded.")
     }
 
     func testPerformanceExample() {

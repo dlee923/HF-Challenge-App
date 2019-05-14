@@ -30,11 +30,34 @@ class HF_TestUITests: XCTestCase {
         app = nil
     }
 
-    func testLikeButtonDidHighlight() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testPromptInvokeIfNoInfoEntered() {
+        let app = XCUIApplication()
+        app.navigationBars["HF_Test.MainView"].children(matching: .button).element.tap()
         
+        let submitButton = app.buttons["Submit"]
+        submitButton.tap()
         
+        let invalidAlert = app.alerts["Invalid"]
+        XCTAssertTrue(invalidAlert.waitForExistence(timeout: 1.0), "Missing data entry prompt.")
+    }
+    
+    func testRecipeRatedPromptInvoked() {
+        let starHfElementsQuery = app.collectionViews.cells.otherElements.containing(.button, identifier:"star hf")
+        starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 0).tap()
+        let alert = app.alerts["Thank you!"].staticTexts["Thank you!"]
+        XCTAssertTrue(alert.waitForExistence(timeout: 1.0), "Missing rating alert.")
+        
+        starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 1).tap()
+        let alert1 = app.alerts["Thank you!"].staticTexts["Thank you!"]
+        XCTAssertTrue(alert1.waitForExistence(timeout: 1.0), "Missing rating alert.")
+        
+        starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 2).tap()
+        let alert2 = app.alerts["Thank you!"].staticTexts["Thank you!"]
+        XCTAssertTrue(alert2.waitForExistence(timeout: 1.0), "Missing rating alert.")
+        
+        starHfElementsQuery.children(matching: .button).matching(identifier: "star hf").element(boundBy: 3).tap()
+        let alert3 = app.alerts["Thank you!"].staticTexts["Thank you!"]
+        XCTAssertTrue(alert3.waitForExistence(timeout: 1.0), "Missing rating alert.")
     }
     
     func testLoginViewControllerNavigation() {

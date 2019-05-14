@@ -71,9 +71,17 @@
 		704B11DE228987C400BC95E8 /* RecipeCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11DC228987C400BC95E8 /* RecipeCellViews.swift */; };
 		704B11DF228987C400BC95E8 /* RecipeCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11DC228987C400BC95E8 /* RecipeCellViews.swift */; };
 		704B11E3228A3F6F00BC95E8 /* IngredientsPillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11E0228A361400BC95E8 /* IngredientsPillCell.swift */; };
+		706EEBF8228A892B00E4678D /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B68228A5A6F005B485B /* Device.swift */; };
+		706EEBF9228A895000E4678D /* IngredientsPillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11E0228A361400BC95E8 /* IngredientsPillCell.swift */; };
+		706EEBFA228A895300E4678D /* IngredientsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B66228A4613005B485B /* IngredientsHeader.swift */; };
+		706EEBFB228A897C00E4678D /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B68228A5A6F005B485B /* Device.swift */; };
+		706EEBFC228A898700E4678D /* IngredientsPillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B11E0228A361400BC95E8 /* IngredientsPillCell.swift */; };
+		706EEBFD228A898A00E4678D /* IngredientsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B66228A4613005B485B /* IngredientsHeader.swift */; };
 		708D7B67228A4613005B485B /* IngredientsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B66228A4613005B485B /* IngredientsHeader.swift */; };
 		708D7B69228A5A6F005B485B /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B68228A5A6F005B485B /* Device.swift */; };
 		708D7B6B228A7456005B485B /* DeviceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B6A228A7456005B485B /* DeviceViews.swift */; };
+		708D7B6C228A861D005B485B /* DeviceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B6A228A7456005B485B /* DeviceViews.swift */; };
+		708D7B6D228A8621005B485B /* DeviceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7B6A228A7456005B485B /* DeviceViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -448,14 +456,18 @@
 				704B11DE228987C400BC95E8 /* RecipeCellViews.swift in Sources */,
 				704B11D62288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11922284FFC100BC95E8 /* User.swift in Sources */,
+				706EEBFC228A898700E4678D /* IngredientsPillCell.swift in Sources */,
 				704B11C5228895F700BC95E8 /* RecipeCellButton.swift in Sources */,
 				704B11B82287CD4600BC95E8 /* Colors.swift in Sources */,
 				704B11C3228895C700BC95E8 /* Fonts.swift in Sources */,
+				708D7B6C228A861D005B485B /* DeviceViews.swift in Sources */,
 				704B119A2286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
 				704B118C2284F03700BC95E8 /* RecipeAPI.swift in Sources */,
 				704B119E2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11B522879FA200BC95E8 /* LoginViewController.swift in Sources */,
 				704B11C4228895E400BC95E8 /* MainViewController.swift in Sources */,
+				706EEBFD228A898A00E4678D /* IngredientsHeader.swift in Sources */,
+				706EEBFB228A897C00E4678D /* Device.swift in Sources */,
 				704B11BB2287D0CE00BC95E8 /* LoginForm.swift in Sources */,
 				704B11C2228895C200BC95E8 /* Extensions.swift in Sources */,
 				704B11D22288BB0F00BC95E8 /* RatingView.swift in Sources */,
@@ -474,14 +486,18 @@
 				704B11DF228987C400BC95E8 /* RecipeCellViews.swift in Sources */,
 				704B11D72288C3B100BC95E8 /* RecipeCellInteraction.swift in Sources */,
 				704B11CE228896D200BC95E8 /* LoginViewController.swift in Sources */,
+				706EEBF9228A895000E4678D /* IngredientsPillCell.swift in Sources */,
 				704B119F2286518400BC95E8 /* RecipeCell.swift in Sources */,
 				704B11C6228896B000BC95E8 /* RecipeCellButton.swift in Sources */,
 				704B119B2286501600BC95E8 /* RecipeCollectionView.swift in Sources */,
+				708D7B6D228A8621005B485B /* DeviceViews.swift in Sources */,
 				704B11C8228896B900BC95E8 /* Extensions.swift in Sources */,
 				704B11C7228896B600BC95E8 /* Colors.swift in Sources */,
 				704B11A322870C8900BC95E8 /* ImageAPI.swift in Sources */,
 				704B117B2284ED7600BC95E8 /* HF_TestUITests.swift in Sources */,
 				704B11C9228896BC00BC95E8 /* Fonts.swift in Sources */,
+				706EEBFA228A895300E4678D /* IngredientsHeader.swift in Sources */,
+				706EEBF8228A892B00E4678D /* Device.swift in Sources */,
 				704B11CF228896D500BC95E8 /* MainViewController.swift in Sources */,
 				704B11CD228896CA00BC95E8 /* LoginForm.swift in Sources */,
 				704B11D32288BB0F00BC95E8 /* RatingView.swift in Sources */,
