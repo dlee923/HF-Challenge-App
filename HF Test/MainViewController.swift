@@ -46,7 +46,15 @@ class MainViewController: UIViewController {
         let dispatchGroup = DispatchGroup()
         
         DispatchQueue.global().sync {
-            RecipeAPI.sharedInstance.downloadRecipeData(completion: { tempRecipes = $0 })
+            RecipeAPI.sharedInstance.downloadRecipeData(completion: {
+                tempRecipes = $0
+                DispatchQueue.main.async {
+                    self.activityEnded()
+                    if let downloadedRecipes = tempRecipes {
+                        completion(downloadedRecipes)
+                    }
+                }
+            })
         }
         DispatchQueue.global().async {
             if let recipes = tempRecipes {

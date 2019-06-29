@@ -99,4 +99,8 @@ extension RecipeCollectionView: UICollectionViewDataSource {
         let height = collectionView.bounds.height
         return CGSize(width: collectionView.bounds.width, height: height)
     }
+    
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        <#code#>
+//    }
 }
